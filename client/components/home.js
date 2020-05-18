@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Route, useParams } from 'react-router-dom'
-import axios from 'axios'
+import React, { useState } from 'react'
+import { Route } from 'react-router-dom'
 import InputComponent from './inputComponent'
 import ListRepositorys from './listRepositorys'
 import ViewRepo from './viewRepo'
@@ -9,20 +8,20 @@ import Head from './head'
 // import Header from './header'
 
 const Home = () => {
-  const { username } = useParams()
-  // eslint-disable-next-line
-  console.log(username)
+  // const { userName } = useParams()
   const [counter, setCounterNew] = useState(0)
-  const [repositoryList, setRepositoryList] = useState([])
+
   // const [currentProject, setCurrentProject] = useState('')
 
-  useEffect(() => {
-    // if (typeof username !== 'undefined') {
-    axios.get(`https://api.github.com/users/patamga/repos`).then(({ data }) => {
-      setRepositoryList(data)
-    })
-    // }
-  }, [username])
+  // useEffect(() => {
+  //   // eslint-disable-next-line
+  //   console.log('Entered: ', userName)
+  //   if (typeof userName !== 'undefined') {
+  //     axios.get(`https://api.github.com/users/${userName}/repos`).then((it) => {
+  //       setRepositoryList(it.data)
+  //     })
+  //   }
+  // }, [userName])
   // useEffect(() => {
   //   if (typeof repository !== 'undefined') {
   //     axios.get(`https://api.github.com/users/:username/${repository}`).then(({ data }) => {
@@ -35,19 +34,14 @@ const Home = () => {
     <div>
       <Head title="Hello" />
       {/* <Header projectList/> */}
-      {username}
       <button type="button" onClick={() => setCounterNew(counter + 1)}>
         updateCounter
       </button>
       <div> Hello World Dashboard {counter} </div>
       <div>
         <Route exact path="/" component={() => <InputComponent />} />
-        <Route
-          exact
-          path="/:username"
-          component={() => <ListRepositorys repositoryList={repositoryList} />}
-        />
-        <Route exact path="/:username/:repository" component={() => <ViewRepo />} />
+        <Route exact path="/:userName" component={() => <ListRepositorys />} />
+        <Route exact path="/:userName/:repository" component={() => <ViewRepo />} />
       </div>
     </div>
   )
