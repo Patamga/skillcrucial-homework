@@ -1,18 +1,22 @@
-import React from 'react'
-import { Link, useParams } from 'react-router-dom'
-
+import React, { useState } from 'react'
+// import { Link } from 'react-router-dom'
+import { history } from '../redux'
 import Head from './head'
 
 const InputComponent = () => {
-  const { username } = useParams()
-  // const [username, setUsername] = useState('')
+  const [username, setUsername] = useState('')
+  const onChange = (e) => {
+    const newValue = e.target.value
+    setUsername(newValue)
+    // props.onChange(newValue)
+  }
 
   return (
     <div>
       <Head title="Hello" />
-      <input type="text" />
-      <button type="button">
-        <Link to={`/${username}`}>Go</Link>
+      <input type="text" value={username} onChange={onChange} />
+      <button id="search-button" type="button" onClick={() => history.push(`/${username}`)}>
+        <span>Search</span>
       </button>
     </div>
   )
