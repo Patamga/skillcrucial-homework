@@ -70,6 +70,8 @@ export default (props) => {
         <Startup>
           <Switch>
             {/* <Route exact path="/" component={() => <Home />} /> */}
+            <Route exact path="/:userName/:repository/" component={() => <Home />} />
+            <Route exact path="/:userName/" component={() => <Home />} />
             <Route exact path="/*" component={() => <Home />} />
             {/* <Route exact path="/dashboard" component={() => <Home />} /> */}
             <PrivateRoute exact path="/hidden-route" component={() => <DummyView />} />
