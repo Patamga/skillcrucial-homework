@@ -7,8 +7,6 @@ const ListRepositorys = () => {
   const { userName } = useParams()
   const [repositoryList, setRepositoryList] = useState([])
   useEffect(() => {
-    // eslint-disable-next-line
-    console.log('Entered: ', userName)
     if (typeof userName !== 'undefined') {
       axios.get(`https://api.github.com/users/${userName}/repos`).then(({ data }) => {
         setRepositoryList(data)
@@ -19,10 +17,20 @@ const ListRepositorys = () => {
   return (
     <div>
       <Head title="Hello" />
-      <span>Repositories for {userName}</span>
-      {repositoryList.map((repo) => {
-        return <div>{repo.name}</div>
-      })}
+      <div className="max-w-sm mx-auto flex p-6 bg-white rounded-lg shadow-xl mb-3">
+        <div className="flex items-center border-b border-b-2 border-teal-500 py-2 ">
+          <span>Repositories for {userName}</span>
+        </div>
+      </div>
+      <div className="max-w-sm mx-auto p-6 bg-white rounded-lg shadow-xl">
+        {repositoryList.map((repo) => {
+          return (
+            <div key={repo.name}>
+              <div style={{ width: '250px' }}>{repo.name}</div>
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }

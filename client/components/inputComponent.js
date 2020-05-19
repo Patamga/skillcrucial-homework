@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-// import { history } from '../redux'
+// import { Link } from 'react-router-dom'
+import { history } from '../redux'
 import Head from './head'
 
 const InputComponent = () => {
@@ -14,11 +14,27 @@ const InputComponent = () => {
   return (
     <div>
       <Head title="Hello" />
-      <input type="text" value={user} onChange={onChange} />
-      <Link to={`/${user}`}>Go</Link>
-      {/* <button id="search-button" type="button" onClick={() => history.push(`/${username}`)}>
-        <span>Search</span>
-      </button> */}
+      <div className="max-w-sm mx-auto flex p-6 bg-white rounded-lg shadow-xl">
+        <div className="flex items-center border-b border-b-2 border-teal-500 py-2 ">
+          <input
+            type="text"
+            value={user}
+            onChange={onChange}
+            className="appearance-none bg-transparent border-none w-full text-gray-700 py-1 px-2 leading-tight focus:outline-none"
+            aria-label="Full name"
+            placeholder="GitHub user name"
+          />
+          <button
+            id="search-button"
+            type="button"
+            onClick={() => history.push(`/${user}`)}
+            className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+          >
+            SHOW
+          </button>
+        </div>
+      </div>
+      {/* <Link to={`/${user}`}>Go</Link> */}
     </div>
   )
 }

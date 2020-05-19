@@ -1,16 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Route } from 'react-router-dom'
 import InputComponent from './inputComponent'
 import ListRepositorys from './listRepositorys'
 import ViewRepo from './viewRepo'
 
 import Head from './head'
-// import Header from './header'
+import Header from './header'
 
 const Home = () => {
-  // const { userName } = useParams()
-  const [counter, setCounterNew] = useState(0)
-
   // const [currentProject, setCurrentProject] = useState('')
 
   // useEffect(() => {
@@ -33,11 +30,8 @@ const Home = () => {
   return (
     <div>
       <Head title="Hello" />
-      {/* <Header projectList/> */}
-      <button type="button" onClick={() => setCounterNew(counter + 1)}>
-        updateCounter
-      </button>
-      <div> Hello World Dashboard {counter} </div>
+      <Header />
+
       <div>
         <Route exact path="/" component={() => <InputComponent />} />
         <Route exact path="/:userName" component={() => <ListRepositorys />} />
