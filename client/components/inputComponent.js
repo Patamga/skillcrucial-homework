@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 // import { Link } from 'react-router-dom'
 import { history } from '../redux'
-import Head from './head'
 
 const InputComponent = () => {
   const [user, setUser] = useState('')
@@ -13,7 +12,6 @@ const InputComponent = () => {
 
   return (
     <div>
-      <Head title="Hello" />
       <div className="max-w-sm mx-auto flex p-6 bg-white rounded-lg shadow-xl">
         <div className="flex items-center border-b border-b-2 border-teal-500 py-2 ">
           <input
