@@ -1,14 +1,19 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
-import Head from './head'
 
 const ViewRepo = (props) => {
   return (
     <div>
-      <Head title="Hello" />
-      <div className="max-w-sm mx-auto p-6 bg-white rounded-lg shadow-xl">
-        <ReactMarkdown source={props.redme} />
+      <div className="md:flex">
+        <div className="mt-4 md:mt-0 md:ml-6">
+          <ReactMarkdown source={props.redme} />
+          {/* <a href="#" className="block mt-1 text-lg leading-tight font-semibold text-gray-900 hover:underline">Finding customers for your new business</a>
+          <p className="mt-2 text-gray-600">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p> */}
+        </div>
       </div>
+      {/* <div id="description" className="max-w-sm mx-auto p-6 bg-white rounded-lg shadow-xl">
+        <ReactMarkdown source={props.redme} />
+      </div> */}
     </div>
   )
 }
