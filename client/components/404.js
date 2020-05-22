@@ -22,7 +22,7 @@ const NotFound = () => {
           }}
         >
           {' '}
-          ЗАТО ЕСТЬ РАКИ
+          РАКИ?
         </button>
       </div>
     </div>
