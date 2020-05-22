@@ -3,33 +3,44 @@ import { Route, useParams } from 'react-router-dom'
 import axios from 'axios'
 import base64 from 'base-64'
 import utf8 from 'utf8'
+import { history } from '../redux'
 
 import InputComponent from './inputComponent'
 import ListRepositorys from './listRepositorys'
 import ViewRepo from './viewRepos'
+import NotFound from './404'
 
 import Head from './head'
-import Header from './header'
+import Header from './headers'
 
 const Home = () => {
   const { userName, repository } = useParams()
 
   const [repositoryList, setRepositoryList] = useState([])
+  const [repoDescription, setRepoDescription] = useState('')
+
   useEffect(() => {
     if (typeof userName !== 'undefined') {
-      axios.get(`https://api.github.com/users/${userName}/repos`).then(({ data }) => {
-        setRepositoryList(data)
-      })
+      axios
+        .get(`https://api.github.com/users/${userName}/repos`)
+        .then(({ data }) => {
+          setRepositoryList(data)
+        })
+        .catch(() => {
+          history.push(`/${404}`)
+        })
     }
   }, [userName])
 
-  const [repoDescription, setRepoDescription] = useState('')
   useEffect(() => {
     if (typeof repository !== 'undefined' && typeof userName !== 'undefined') {
       axios
         .get(`https://api.github.com/repos/${userName}/${repository}/contents/README.md`)
         .then(({ data }) => {
           setRepoDescription(utf8.decode(base64.decode(data.content)))
+        })
+        .catch(() => {
+          history.push(`/${userName}/${404}`)
         })
     }
   }, [repository])
@@ -40,9 +51,7 @@ const Home = () => {
       <div>
         <Header />
       </div>
-
       <div>
-        {/* <Switch> */}
         <Route exact path="/" component={() => <InputComponent />} />
         <Route
           exact
@@ -54,7 +63,8 @@ const Home = () => {
           path="/:userName/:repository"
           component={() => <ViewRepo redme={repoDescription} />}
         />
-        {/* </Switch> */}
+        <Route exact path="/404" component={() => <NotFound repos={repositoryList} />} />
+        <Route exact path="/:userName/404" component={() => <NotFound repos={repositoryList} />} />
       </div>
     </div>
   )

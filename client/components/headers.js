@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
-// import axios from 'axios'
 
 const Header = () => {
   const { userName, repository } = useParams()
