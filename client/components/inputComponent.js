@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { history } from '../redux'
 
 const InputComponent = () => {
-  const re = /^[\da-zA-Z]+$/
+  const re = /^[\da-zA-Z]*$/
   const [user, setUser] = useState('')
   const onChange = (e) => {
     if (re.test(e.target.value)) {
