@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { history } from '../redux'
 
 const InputComponent = () => {
-  const re = /^[\da-zA-Z]*$/
+  const re = /^[\da-zA-_.-]*$/
   const [user, setUser] = useState('')
   const onChange = (e) => {
     if (re.test(e.target.value)) {
@@ -24,6 +24,11 @@ const InputComponent = () => {
             className="flex appearance-none bg-transparent border-none w-full text-gray-700 py-1 px-2 leading-tight focus:outline-none max-w-xs"
             aria-label="Full name"
             placeholder="GitHub user name"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                history.push(`/${user}`)
+              }
+            }}
           />
           <button
             id="search-button"
