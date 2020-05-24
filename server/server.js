@@ -5,7 +5,7 @@ import bodyParser from 'body-parser'
 import sockjs from 'sockjs'
 import { renderToStaticNodeStream } from 'react-dom/server'
 import React from 'react'
-
+import shortid from 'shortid'
 import cookieParser from 'cookie-parser'
 import Root from '../client/config/root'
 
@@ -26,8 +26,59 @@ const middleware = [
 
 middleware.forEach((it) => server.use(it))
 
-server.use('/api/', (req, res) => {
-  res.status(404)
+const { readFile, writeFile } = require('fs').promises
+
+const workDir = `${process.cwd()}/tasks/`
+
+const fileWrite = async (category, data) => {
+  return writeFile(`${workDir}/${category}.json`, JSON.stringify(data), { encoding: 'utf8' })
+}
+
+const fileRead = async (category) => {
+  return readFile(`${workDir}/${category}.json`, { encoding: 'utf8' })
+    .then((data) => JSON.parse(data))
+    .catch(async () => {
+      await fileWrite(category, [])
+    })
+}
+
+server.get('/api/v1/tasks/:category', async (req, res) => {
+  const { category } = req.params
+  const taskList = await fileRead(category)
+  const result = taskList.map((item) => {
+    const rs = Object.entries(item).reduce((acc, [key, value]) => {
+      if (typeof value === 'string' || typeof value === 'boolean') {
+        return { ...acc, [key]: value }
+      }
+      return acc
+    }, {})
+
+    // const rs = Object.keys(item).reduce((acc, rec) => {
+    //   if (typeof item[rec] === 'string' || typeof item[rec] === 'boolean') {
+    //     return { ...acc, [rec]: item[rec] }
+    //   }
+    //   return acc
+    // }, {})
+    return rs
+  })
+
+  res.json(result)
+})
+
+server.post('/api/v1/tasks/:category', async (req, res) => {
+  const { category } = req.params
+  let taskList = await fileRead(category)
+  const newTask = {
+    taskId: shortid.generate(),
+    title: req.body.title,
+    status: 'new',
+    _isDeleted: false,
+    _createdAt: +new Date(),
+    _deletedAt: null
+  }
+  taskList = [...taskList, newTask]
+  fileWrite(category, taskList)
+  res.status(200)
   res.end()
 })
 
@@ -54,6 +105,11 @@ server.get('/', (req, res) => {
     res.write(htmlEnd)
     res.end()
   })
+})
+
+server.use('/api/', (req, res) => {
+  res.status(404)
+  res.end()
 })
 
 server.get('/*', (req, res) => {

@@ -115,6 +115,7 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
+    "shortid": "^2.2.15",
     "sockjs": "^0.3.20",
     "sockjs-client": "^1.4.0",
     "string-replace-webpack-plugin": "^0.1.3",

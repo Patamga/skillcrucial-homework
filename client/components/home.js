@@ -22,7 +22,7 @@ const Home = () => {
   useEffect(() => {
     if (typeof userName !== 'undefined') {
       axios
-        .get(`https://api.github.com/users/${userName}/repos`)
+        .get(`http://localhost:8090/api/v1/tasks/${userName}`)
         .then(({ data }) => {
           setRepositoryList(data)
         })

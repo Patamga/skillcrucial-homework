@@ -1,0 +1,34 @@
+[
+  {  
+  "taskId": "2WEKaVNO",
+  "title": "Lorem ipsum dolor sit amet, consectetur adipisicing elit", 
+  "_isDeleted": false, 
+  "_createdAt": 14135235,
+  "_deletedAt": 14135235,
+  "status": "done"
+ },
+ {  
+  "taskId": "50EKaVNO",
+  "title": "Assumenda, quia temporibus eveniet a libero incidunt suscipit", 
+  "_isDeleted": true, 
+  "_createdAt": 14135235,
+  "_deletedAt": 14135235,
+  "status": "new"
+ },
+ {  
+  "taskId": "50EKaVNO",
+  "title": "Quidem, ipsam illum quis sed voluptatum quae eum fugit earum", 
+  "_isDeleted": false, 
+  "_createdAt": 14135235,
+  "_deletedAt": 14135235,
+  "status": "blocked"
+ },
+ {  
+  "taskId": "50EKaVNO",
+  "title": "TTo control the list style type", 
+  "_isDeleted": false, 
+  "_createdAt": 14135235,
+  "_deletedAt": 14135235,
+  "status": "in progress"
+ }
+]
