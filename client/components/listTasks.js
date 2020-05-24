@@ -1,19 +1,21 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+// import { Link, useParams } from 'react-router-dom'
 
 const ListRepositorys = (props) => {
-  const { userName } = useParams()
+  // const { userName } = useParams()
   return (
     <div>
+      {/* <Input /> */}
       <div className="md:flex m-4">
         <div className="mt-4 md:mt-0 md:ml-6">
           {props.repos.map((repo) => {
             return (
               <div key={repo.title} className="mt-2 text-gray-600 list-disc">
                 <ul className="list-disc">
-                  <li>
+                  <li>{repo.title}</li>
+                  {/* <li>
                     <Link to={`/${userName}/${repo.taskId}`}>{repo.title}</Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             )

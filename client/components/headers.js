@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 const Header = () => {
-  const { userName, repository } = useParams()
+  const { categoryName, repository } = useParams()
   // const [toggled, toggle] = useState(false)
 
   return (
@@ -39,10 +39,10 @@ const Header = () => {
       {/* {toggled && ( */}
       <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div className="text-sm lg:flex-grow">
-          {userName && (
+          {categoryName && (
             <span className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 mr-4">
               User:
-              <span className="text-sm text-white mx-2">{userName}</span>
+              <span className="text-sm text-white mx-2">{categoryName}</span>
             </span>
           )}
           {repository && (
@@ -59,14 +59,14 @@ const Header = () => {
             <span className="px-4">
               <Link
                 id="go-repository-list"
-                to={`/${userName}`}
+                to={`/${categoryName}`}
                 className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
               >
                 Back
               </Link>
             </span>
           )}
-          {userName && (
+          {categoryName && (
             <span className="px-4">
               <Link
                 id="go-back"

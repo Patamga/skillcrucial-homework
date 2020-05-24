@@ -1,16 +1,31 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 // import { Link } from 'react-router-dom'
 import { history } from '../redux'
 
-const InputComponent = () => {
-  const re = /^[\d\sa-zA-Zа-яА-я_.-]*$/
-  const [user, setUser] = useState('')
+const Input = () => {
+  const [inputTextValue, setInputTextValue] = useState('')
+  const [taskList, setTaskList] = useState([])
+  const { categoryName } = useParams()
+
   const onChange = (e) => {
-    if (re.test(e.target.value)) {
-      const newValue = e.target.value
-      setUser(newValue)
-    }
+    const newValue = e.target.value
+    setInputTextValue(newValue)
   }
+
+  useEffect(() => {
+    if (typeof categoryName !== 'undefined') {
+      axios
+        .post(`http://localhost:8090/api/v1/tasks/${categoryName}`, { title: inputTextValue })
+        .then(({ data }) => {
+          setTaskList(data)
+        })
+        .catch(() => {
+          'уже усть такая'
+        })
+    }
+  }, [categoryName])
+
 
   return (
     <div>
@@ -19,21 +34,21 @@ const InputComponent = () => {
           <input
             id="input-field"
             type="text"
-            value={user}
+            value={inputTextValue}
             onChange={onChange}
             className="flex appearance-none bg-transparent border-none w-full text-gray-700 py-1 px-2 leading-tight focus:outline-none max-w-xs"
             aria-label="Full name"
             placeholder="GitHub user name"
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                history.push(`/${user}`)
+                history.push(`/${inputTextValue}`)
               }
             }}
           />
           <button
             id="search-button"
             type="button"
-            onClick={() => history.push(`/${user}`)}
+            onClick={() => history.push(`/${inputTextValue}`)}
             className="flex bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
           >
             SHOW
@@ -45,6 +60,6 @@ const InputComponent = () => {
   )
 }
 
-InputComponent.propTypes = {}
+Input.propTypes = {}
 
-export default React.memo(InputComponent)
+export default React.memo(Input)

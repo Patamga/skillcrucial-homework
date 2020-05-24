@@ -52,7 +52,6 @@ server.get('/api/v1/tasks/:category', async (req, res) => {
       }
       return acc
     }, {})
-
     // const rs = Object.keys(item).reduce((acc, rec) => {
     //   if (typeof item[rec] === 'string' || typeof item[rec] === 'boolean') {
     //     return { ...acc, [rec]: item[rec] }
