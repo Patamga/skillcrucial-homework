@@ -7,10 +7,11 @@ import { Switch, Route, Redirect, StaticRouter } from 'react-router-dom'
 
 import store, { history } from '../redux'
 
-import Home from '../components/home'
 import DummyView from '../components/dummy-view'
 import NotFound from '../components/404'
-
+import Shop from "../pages/shop"
+import Basket from '../pages/basket'
+import Logs from '../pages/logs'
 import Startup from './startup'
 
 const OnlyAnonymousRoute = ({ component: Component, ...rest }) => {
@@ -72,8 +73,9 @@ const Root = (props) => {
       <ScillcrucialRouter history={history} location={props.location} context={props.context}>
         <Startup>
           <Switch>
-            <Route exact path="/" component={() => <DummyView />} />
-            <Route exact path="/dashboard" component={() => <Home />} />
+            <Route exact path="/" component={() => <Shop />} />
+            <Route exact path="/basket" component={() => <Basket />} />
+            <Route exact path="/logs" component={() => <Logs />} />
             <PrivateRoute exact path="/hidden-route" component={() => <DummyView />} />
             <Route component={() => <NotFound />} />
           </Switch>
