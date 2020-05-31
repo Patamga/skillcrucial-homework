@@ -1,0 +1,49 @@
+[{
+  "id": "0001",
+  "image": "01",
+  "price": 38500,
+  "currency": "EUR",
+  "title": "Financial well-being"
+},
+{
+  "id": "0002",
+  "image": "02",
+  "price": 97340,
+  "currency": "EUR",
+  "title": "there is never much money"
+},
+{
+  "id": "0003",
+  "image": "03",
+  "price": 450,
+  "currency": "EUR",
+  "title": "Life is Beautiful"
+},
+{
+  "id": "0004",
+  "image": "04",
+  "price": 100500,
+  "currency": "EUR",
+  "title": "I am after quarantine"
+},
+{
+  "id": "0005",
+  "image": "05",
+  "price": 1000000,
+  "currency": "EUR",
+  "title": "Work is not a wolf"
+},
+{
+  "id": "0006",
+  "image": "06",
+  "price": 90500,
+  "currency": "EUR",
+  "title": "In the forest will not run away"
+},
+{
+  "id": "0007",
+  "image": "07",
+  "price": 74500,
+  "currency": "EUR",
+  "title": "The most interesting is always in the hands of men"
+}]

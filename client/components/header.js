@@ -8,15 +8,15 @@ const Header = () => {
   return (
     <nav className="flex items-center justify-between flex-wrap bg-teal-600 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
-        <span className="font-semibold text-base tracking-tight px-1">W12 </span>
+        <span className="font-semibold text-base tracking-tight px-1">W13 </span>
         <span className="font-semibold text-base tracking-tight px-1">&#9752; </span>
         <span className="px-2">
           <Link id="brand-name" to="/" className="font-semibold text-2xl tracking-tight">
-            SHOP
+            Shopping
           </Link>
         </span>
       </div>
-      <div className=" inline-block relative w-48 text-white">
+      {/* <div className=" inline-block relative w-48 text-white">
         sort by
         <select className="block appearance-none bg-teal-600 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
           <option>lowest first</option>
@@ -24,14 +24,21 @@ const Header = () => {
           <option>A - Z </option>
           <option>Z - A </option>
         </select>
+      </div> */}
+      <div className="flex items-center flex-shrink-0 text-white mr-6">
+        <button id="sort-price" type="button">
+          highest first |{' '}
+        </button>
+        <button id="sort-name" type="button" className="flex items-center px-1">
+          A - Z |
+        </button>
       </div>
-      <div className="inline-block relative w-32 text-white">
-        currency
-        <select className="block appearance-none bg-teal-600 py-2 pr-8 rounded leading-tight focus:outline-none focus:shadow-outline">
-          <option>USD &#36;</option>
-          <option>EUR &#8364;</option>
-          <option>CAD C&#36; </option>
-        </select>
+      <div className="flex items-center flex-shrink-0 text-white mr-6">
+        <button type="button">EUR | </button>
+        <button type="button" className="flex items-center px-1">
+          USD |
+        </button>
+        <button type="button">CAD </button>
       </div>
       <div className=" items-center flex-shrink-0 text-white mr-6">
         <span className="px-2">
