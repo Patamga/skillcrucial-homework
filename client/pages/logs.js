@@ -1,12 +1,7 @@
 import React from 'react'
 
-
 const Logs = () => {
-  return (
-    <div>
-      Logs
-    </div>
-  )
+  return <div>Logs</div>
 }
 
 Logs.propTypes = {}

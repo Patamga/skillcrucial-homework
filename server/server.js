@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import sockjs from 'sockjs'
 import { renderToStaticNodeStream } from 'react-dom/server'
 import React from 'react'
+import axios from 'axios'
 
 import cookieParser from 'cookie-parser'
 import Root from '../client/config/root'
@@ -26,9 +27,52 @@ const middleware = [
 
 middleware.forEach((it) => server.use(it))
 
-server.use('/api/', (req, res) => {
-  res.status(404)
-  res.end()
+const { readFile, writeFile } = require('fs').promises
+
+const workDir = `${process.cwd()}/client/data`
+
+const fileRead = async () => {
+  return readFile(`${workDir}/catalog.json`, { encoding: 'utf8' }).then((data) => JSON.parse(data))
+}
+
+const ReadCurrency = async () => {
+  return axios('https://api.exchangeratesapi.io/latest').then(({ data }) => {
+    return data.rates
+  })
+}
+
+// const writeLogs = async (logs, data) => {
+//   return writeFile(`${workDir}/logs.json`, JSON.stringify(data), { encoding: 'utf8' })
+// }
+
+// const readLog = async () => {
+//   return readFile(`${workDir}/logs.json`, { encoding: 'utf8' })
+//     .then((data) => JSON.parse(data))
+//     .catch(async () => {
+//       await writeLogs([])
+//     })
+// }
+
+// server.get('/api/v1/logs', async (req, res) => {
+//   const logs = await readLog()
+//   res.json(logs)
+// })
+
+server.get('/api/v1/catalog', async (req, res) => {
+  const catalog = await fileRead()
+  res.json(catalog)
+})
+
+server.get('/api/v1/usd', async (req, res) => {
+  const currency = await readCurrency()
+  const usd = JSON.stringify(currency.USD)
+  res.json(usd)
+})
+
+server.get('/api/v1/cad', async (req, res) => {
+  const currency = await ReadCurrency()
+  const cad = JSON.stringify(currency.CAD)
+  res.json(cad)
 })
 
 const echo = sockjs.createServer()
@@ -54,6 +98,11 @@ server.get('/', (req, res) => {
     res.write(htmlEnd)
     res.end()
   })
+})
+
+server.use('/api/', (req, res) => {
+  res.status(404)
+  res.end()
 })
 
 server.get('/*', (req, res) => {
