@@ -42,26 +42,55 @@ const fileRead = async (category) => {
     })
 }
 
+const reduceCutObject = (item) => {
+  const res = Object.entries(item).reduce((acc, [key, value]) => {
+    if (typeof value === 'string' || typeof value === 'boolean') {
+      return { ...acc, [key]: value }
+    }
+    return acc
+  }, {})
+  return res
+}
+
+const cut = (arg) => arg.map((item) => reduceCutObject(item))
+
+const filterByTime = (tasks, timespan) => {
+  let timeRange = +new Date()
+  if (timespan && timespan === 'day') {
+    timeRange = 86400000
+  } else if (timespan && timespan === 'week') {
+    timeRange = 604800000
+  } else if (timespan && timespan === 'month') {
+    timeRange = 2592000000
+  }
+  const result = tasks.reduce((acc, item) => {
+    // eslint-disable-next-line
+    if (item._createdAt * 1000 + timeRange > +new Date() && !item._isDeleted ) {
+      return [...acc, item]
+    }
+    return acc
+  }, [])
+  return cut(result)
+}
+
+const filterById = (tasks, id) => tasks.filter((item) => item.taskId === id)
+
+// server.get('/api/v1/tasks/categories', async (req, res) => {
+//   const result = fs
+//     .readdirSync(workDir)
+//     .map((category) => category.substring(0, category.lastIndexOf('.json')))
+//   res.send(result)
+// })
+
 server.get('/api/v1/tasks/:category', async (req, res) => {
   const { category } = req.params
   const taskList = await fileRead(category)
-  const result = taskList.map((item) => {
-    const rs = Object.entries(item).reduce((acc, [key, value]) => {
-      if (typeof value === 'string' || typeof value === 'boolean') {
-        return { ...acc, [key]: value }
-      }
-      return acc
-    }, {})
-    // const rs = Object.keys(item).reduce((acc, rec) => {
-    //   if (typeof item[rec] === 'string' || typeof item[rec] === 'boolean') {
-    //     return { ...acc, [rec]: item[rec] }
-    //   }
-    //   return acc
-    // }, {})
-    return rs
-  })
-
-  res.json(result)
+  if (taskList) {
+    res.json(taskList)
+  } else {
+    res.status(404)
+  }
+  res.end()
 })
 
 server.post('/api/v1/tasks/:category', async (req, res) => {
@@ -75,7 +104,113 @@ server.post('/api/v1/tasks/:category', async (req, res) => {
     _createdAt: +new Date(),
     _deletedAt: null
   }
-  taskList = [...taskList, newTask]
+  if (req.body.title) {
+    taskList = [...taskList, newTask]
+    fileWrite(category, taskList)
+    res.status(200)
+  } else {
+    res.status(400)
+  }
+  res.end()
+})
+
+server.get('/api/v1/tasks/:category/:timespan', async (req, res) => {
+  const { category } = req.params
+  const { timespan } = req.params
+  const taskList = await fileRead(category)
+  const result = filterByTime(taskList, timespan)
+  res.json(result)
+})
+
+server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
+  const { category } = req.params
+  const { id } = req.params
+  let taskList = await fileRead(category)
+  if (req.body.title) {
+    taskList = taskList.map((task) => {
+      if (task.taskId === id) {
+        return { ...task, title: req.body.title }
+      }
+      return task
+    })
+    fileWrite(category, taskList)
+    res.status(200)
+
+    let task = filterById(taskList, id)
+    task = cut(task)
+    res.json(task)
+  }
+  if (req.body.status) {
+    if (
+      req.body.status === 'done' ||
+      req.body.status === 'new' ||
+      req.body.status === 'in progress' ||
+      req.body.status === 'blocked'
+    ) {
+      taskList = taskList.map((task) => {
+        if (task.taskId === id) {
+          return { ...task, status: req.body.status }
+        }
+        return task
+      })
+      fileWrite(category, taskList)
+      res.status(200)
+      let task = filterById(taskList, id)
+      task = cut(task)
+      res.json(task)
+    } else {
+      res.status(501)
+      res.json({ status: 'error', message: 'incorrect status' })
+    }
+  }
+  res.end()
+})
+
+// server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
+//   const { category } = req.params
+//   const { id } = req.params
+//   const taskList = await fileRead(category)
+
+//     // if (req.body.title) {
+//     //   task.title = req.body.title
+//     //   fileWrite(category, taskList)
+//     //   task = reduceCutObject(task)
+//     //   res.json(task)
+//     // }
+//   if (
+//     req.body.status === 'done' ||
+//     req.body.status === 'new' ||
+//     req.body.status === 'in progress' ||
+//     req.body.status === 'blocked'
+//   ) {
+//       taskList.map((task) => {
+//         if (task.id === id) {
+//         task.status = req.body.status
+//         }
+//         return task
+//       })
+//     fileWrite(category, taskList)
+//     // eslint-disable-next-line
+//     console.log('000000000000', taskList)
+//     // task = reduceCutObject(task)
+//     res.json(task)
+//   } else {
+//     res.status(501)
+//     res.body({ status: 'error', message: 'incorrect status' })
+//   }
+//   res.end()
+// })
+
+server.delete('/api/v1/tasks/:category/:id', async (req, res) => {
+  const { category } = req.params
+  const { id } = req.params
+  let taskList = await fileRead(category)
+  taskList = taskList.map((task) => {
+    if (task.taskId === id) {
+      return { ...task, _isDeleted: 'true', _deletedAt: +new Date() }
+    }
+    return task
+  })
   fileWrite(category, taskList)
   res.status(200)
   res.end()
