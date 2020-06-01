@@ -27,7 +27,7 @@ const middleware = [
 
 middleware.forEach((it) => server.use(it))
 
-const { readFile, writeFile } = require('fs').promises
+const { readFile } = require('fs').promises
 
 const workDir = `${process.cwd()}/client/data`
 
@@ -35,7 +35,7 @@ const fileRead = async () => {
   return readFile(`${workDir}/catalog.json`, { encoding: 'utf8' }).then((data) => JSON.parse(data))
 }
 
-const ReadCurrency = async () => {
+const readCurrency = async () => {
   return axios('https://api.exchangeratesapi.io/latest').then(({ data }) => {
     return data.rates
   })
@@ -70,7 +70,7 @@ server.get('/api/v1/usd', async (req, res) => {
 })
 
 server.get('/api/v1/cad', async (req, res) => {
-  const currency = await ReadCurrency()
+  const currency = await readCurrency()
   const cad = JSON.stringify(currency.CAD)
   res.json(cad)
 })
