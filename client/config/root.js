@@ -7,7 +7,8 @@ import { Switch, Route, Redirect, StaticRouter } from 'react-router-dom'
 
 import store, { history } from '../redux'
 
-import Home from '../components/home'
+// import Home from '../components/home'
+import Todo from '../components/todo'
 import DummyView from '../components/dummy-view'
 import NotFound from '../components/404'
 
@@ -73,9 +74,9 @@ const Root = (props) => {
         <Startup>
           <Switch>
             {/* <Route exact path="/" component={() => <Home />} /> */}
-            <Route exact path="/:category/:timespan" component={() => <Home />} />
-            <Route exact path="/:category/" component={() => <Home />} />
-            <Route exact path="/*" component={() => <Home />} />
+            <Route exact path="/:category/:timespan" component={() => <Todo />} />
+            <Route exact path="/:category/" component={() => <Todo />} />
+            <Route exact path="/*" component={() => <Todo />} />
             {/* <Route exact path="/dashboard" component={() => <Home />} /> */}
             <PrivateRoute exact path="/hidden-route" component={() => <DummyView />} />
             <Route component={() => <NotFound />} />

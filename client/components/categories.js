@@ -8,7 +8,6 @@ const Categories = (props) => {
 
       <div>
         {props.dirList.map((category) => {
-          console.log('11111',category)
           return (
             <div key={category} className="mt-2 text-gray-600 list-disc">
               <ul className="list-none list-inside bg-gray-200">
