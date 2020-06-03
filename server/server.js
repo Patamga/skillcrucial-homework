@@ -27,6 +27,7 @@ const middleware = [
 middleware.forEach((it) => server.use(it))
 
 const { readFile, writeFile } = require('fs').promises
+const { readdir } = require('fs')
 
 const workDir = `${process.cwd()}/tasks/`
 
@@ -75,12 +76,15 @@ const filterByTime = (tasks, timespan) => {
 
 const filterById = (tasks, id) => tasks.filter((item) => item.taskId === id)
 
-// server.get('/api/v1/tasks/categories', async (req, res) => {
-//   const result = fs
-//     .readdirSync(workDir)
-//     .map((category) => category.substring(0, category.lastIndexOf('.json')))
-//   res.send(result)
-// })
+server.get('/api/v1/tasks/', async (req, res) => {
+  await readdir(workDir, (err, categories) => {
+    const result = categories.map((category) => {
+      return category.substring(0, category.lastIndexOf('.json'))
+    })
+
+    return res.json(result)
+  })
+})
 
 server.get('/api/v1/tasks/:category', async (req, res) => {
   const { category } = req.params
@@ -165,41 +169,6 @@ server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
   }
   res.end()
 })
-
-// server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
-//   const { category } = req.params
-//   const { id } = req.params
-//   const taskList = await fileRead(category)
-
-//     // if (req.body.title) {
-//     //   task.title = req.body.title
-//     //   fileWrite(category, taskList)
-//     //   task = reduceCutObject(task)
-//     //   res.json(task)
-//     // }
-//   if (
-//     req.body.status === 'done' ||
-//     req.body.status === 'new' ||
-//     req.body.status === 'in progress' ||
-//     req.body.status === 'blocked'
-//   ) {
-//       taskList.map((task) => {
-//         if (task.id === id) {
-//         task.status = req.body.status
-//         }
-//         return task
-//       })
-//     fileWrite(category, taskList)
-//     // eslint-disable-next-line
-//     console.log('000000000000', taskList)
-//     // task = reduceCutObject(task)
-//     res.json(task)
-//   } else {
-//     res.status(501)
-//     res.body({ status: 'error', message: 'incorrect status' })
-//   }
-//   res.end()
-// })
 
 server.delete('/api/v1/tasks/:category/:id', async (req, res) => {
   const { category } = req.params

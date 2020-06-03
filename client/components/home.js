@@ -1,66 +1,57 @@
 import React, { useState, useEffect } from 'react'
 import { Route, useParams } from 'react-router-dom'
 import axios from 'axios'
-// import base64 from 'base-64'
-// import utf8 from 'utf8'
-// import { history } from '../redux'
 
-import InputComponent from './inputComponent'
-import ListTasks from './listTasks'
-// import ViewRepo from './viewRepos'
-import NotFound from './404'
-
+import Categories from './categories'
+import TaskList from './taskList'
 import Head from './head'
-import Header from './headers'
+import HeaderAll from './headersAll'
 
 const Home = () => {
-  const { categoryName } = useParams()
+  const { category, timespan } = useParams()
 
+  const [dirList, setDirList] = useState([])
   const [taskList, setTaskList] = useState([])
- // const [repoDescription, setRepoDescription] = useState('')
+  const [timespanList, setTimespanList] = useState([])
+  const [refreshState, setRefresh] = useState(false)
+
+  const getRefresh = () => {
+    return refreshState
+  }
 
   useEffect(() => {
-    if (typeof categoryName !== 'undefined') {
-      axios
-        .get(`http://localhost:8090/api/v1/tasks/${categoryName}`)
-        .then(({ data }) => {
-          setTaskList(data)
-        })
-        .catch(() => {
-          'уже усть такая'
-        })
+    axios.get(`/api/v1/tasks/`).then(({ data }) => {
+      setDirList(data)
+    })
+  }, [])
+
+  useEffect(() => {
+    console.log('Renew task list')
+    if (typeof category !== 'undefined') {
+      axios.get(`/api/v1/tasks/${category}`).then(({ data }) => {
+        setTaskList(data)
+      })
     }
-  }, [categoryName])
+  }, [category, refreshState])
 
-  // useEffect(() => {
-  //   if (typeof repository !== 'undefined' && typeof categoryName !== 'undefined') {
-  //     axios
-  //       .get(`https://api.github.com/repos/${categoryName}/${repository}/contents/README.md`)
-  //       .then(({ data }) => {
-  //         setRepoDescription(utf8.decode(base64.decode(data.content)))
-  //       })
-  //       .catch(() => {
-  //         history.push(`/${categoryName}/${404}`)
-  //       })
-  //   }
-  // }, [repository])
-
+  useEffect(() => {
+    if (typeof timespan !== 'undefined') {
+      axios.get(`/api/v1/tasks/${category}/${timespan}`).then(({ data }) => {
+        setTimespanList(data)
+      })
+    }
+  }, [timespan])
+  //
   return (
     <div>
       <Head title="Hello" />
       <div>
-        <Header />
+        <HeaderAll />
       </div>
       <div>
-        <Route exact path="/" component={() => <InputComponent />} />
-        <Route exact path="/:categoryName" component={() => <ListTasks repos={taskList} />} />
-        {/* <Route
-          exact
-          path="/:categoryName/:repository"
-          component={() => <ViewRepo redme={repoDescription} />}
-        /> */}
-        <Route exact path="/404" component={() => <NotFound repos={taskList} />} />
-        <Route exact path="/:userName/404" component={() => <NotFound repos={taskList} />} />
+        <Route exact path="/" component={() => <Categories dirList={dirList} />} />
+        <Route exact path="/:category" component={() => <TaskList refresh={setRefresh} state={getRefresh} tasks={taskList} />} />
+        <Route exact path="/:category/:timespan" component={() => <TaskList time={timespanList} />} />
       </div>
     </div>
   )

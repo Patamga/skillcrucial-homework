@@ -1,65 +1,63 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import axios from 'axios'
+
 // import { Link } from 'react-router-dom'
 import { history } from '../redux'
 
-const Input = () => {
-  const [inputTextValue, setInputTextValue] = useState('')
-  const [taskList, setTaskList] = useState([])
-  const { categoryName } = useParams()
+const InputComponent = (props) => {
+  const { category } = useParams()
 
+  const [taskBody, setTaskBody] = useState('')
+  const setRefresh = props.refresh
+  const refreshState = props.state
+
+  const re = /^[ -~а-яА-Я]*$/
   const onChange = (e) => {
-    const newValue = e.target.value
-    setInputTextValue(newValue)
-  }
-
-  useEffect(() => {
-    if (typeof categoryName !== 'undefined') {
-      axios
-        .post(`http://localhost:8090/api/v1/tasks/${categoryName}`, { title: inputTextValue })
-        .then(({ data }) => {
-          setTaskList(data)
-        })
-        .catch(() => {
-          'уже усть такая'
-        })
+    if (re.test(e.target.value)) {
+      const newValue = e.target.value
+      setTaskBody(newValue)
     }
-  }, [categoryName])
-
-
+  }
+  const createTask = (task) => {
+    if (typeof category !== 'undefined') {
+      axios.post(`/api/v1/tasks/${category}`, { title: task })
+    }
+    setTaskBody('')
+    setTimeout(1000)
+    setRefresh(!refreshState())
+  }
   return (
-    <div>
-      <div className="max-w-sm mx-auto flex-auto p-6 bg-white rounded-lg shadow-xl items-center">
-        <div className="flex w-auto items-center border-b border-b-2 border-teal-500 py-2 ">
+    <div className="w-full my-5">
+      <div className="flex flex-wrap mb-3">
+        <div className="flex -mx-1 w-full px-3 md:mb-0">
           <input
-            id="input-field"
             type="text"
-            value={inputTextValue}
+            value={taskBody}
             onChange={onChange}
-            className="flex appearance-none bg-transparent border-none w-full text-gray-700 py-1 px-2 leading-tight focus:outline-none max-w-xs"
-            aria-label="Full name"
-            placeholder="GitHub user name"
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                history.push(`/${inputTextValue}`)
-              }
-            }}
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-blue-500 rounded py-3 px-4   focus:outline-none focus:bg-white mx-3"
+            placeholder="add task"
           />
           <button
-            id="search-button"
             type="button"
-            onClick={() => history.push(`/${inputTextValue}`)}
-            className="flex bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+            onClick={() => createTask(taskBody) }
+            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-3 px-4  border border-blue-500 hover:border-transparent rounded"
           >
-            SHOW
+            ADD
+          </button>
+          <button
+            type="button"
+            onClick={() => history.push(`/${category}`)}
+            className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-3 px-4  border border-blue-500 hover:border-transparent rounded"
+          >
+            ADD
           </button>
         </div>
       </div>
-      {/* <Link to={`/${user}`}>Go</Link> */}
     </div>
   )
 }
 
-Input.propTypes = {}
+InputComponent.propTypes = {}
 
-export default React.memo(Input)
+export default React.memo(InputComponent)
