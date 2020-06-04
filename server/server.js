@@ -41,15 +41,47 @@ const middleware = [
 
 middleware.forEach((it) => server.use(it))
 
-server.use('/api/', (req, res) => {
-  res.status(404)
-  res.end()
+const { readFile } = require('fs').promises
+
+const workDir = `${process.cwd()}/client/data`
+
+const fileRead = async () => {
+  return readFile(`${workDir}/catalog.json`, { encoding: 'utf8' }).then((data) => JSON.parse(data))
+}
+
+const readCurrency = async () => {
+  return axios('https://api.exchangeratesapi.io/latest').then(({ data }) => {
+    return data.rates
+  })
+}
+
+server.get('/api/v1/catalog', async (req, res) => {
+  const catalog = await fileRead()
+  res.json(catalog)
+})
+
+server.get('/api/v1/usd', async (req, res) => {
+  const currency = await readCurrency()
+  const usd = JSON.stringify(currency.USD)
+  res.json(usd)
+})
+
+server.get('/api/v1/cad', async (req, res) => {
+  const currency = await readCurrency()
+  const cad = JSON.stringify(currency.CAD)
+  res.json(cad)
 })
 
 const [htmlStart, htmlEnd] = Html({
   body: 'separator',
   title: 'Skillcrucial - Become an IT HERO'
 }).split('separator')
+
+
+server.use('/api/', (req, res) => {
+  res.status(404)
+  res.end()
+})
 
 server.get('/', (req, res) => {
   const appStream = renderToStaticNodeStream(<Root location={req.url} context={{}} />)
