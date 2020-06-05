@@ -6,8 +6,18 @@ const Header = () => {
     <div>
       <nav className="flex items-center justify-between text-white flex-wrap bg-pink-700 p-6">
         <div className="flex items-center flex-shrink-0 mr-6">
-          <span className="font-semibold text-base tracking-tight px-1">W13 </span>
-          <span className="font-semibold text-base tracking-tight px-1" role="img" aria-label="list">&#9752;</span>
+          <span className="font-semibold text-base tracking-tight px-1">
+            <Link id="brand-name" to="/logs" className="font-semibold tracking-tight">
+              W13
+            </Link>
+          </span>
+          <span
+            className="font-semibold text-base tracking-tight px-1"
+            role="img"
+            aria-label="list"
+          >
+            &#9752;
+          </span>
           <span className="px-2">
             <Link id="brand-name" to="/" className="font-semibold text-2xl tracking-tight">
               Shopping
