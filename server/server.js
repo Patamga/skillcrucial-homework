@@ -44,14 +44,15 @@ middleware.forEach((it) => server.use(it))
 const { readFile, writeFile } = require('fs').promises
 const { readdir } = require('fs')
 
-const workDir = `${process.cwd()}/tasks/`
+const taskDir = `${process.cwd()}/tasks/`
+const imageDir = `${process.cwd()}/img/`
 
 const fileWrite = async (category, data) => {
-  return writeFile(`${workDir}/${category}.json`, JSON.stringify(data), { encoding: 'utf8' })
+  return writeFile(`${taskDir}/${category}.json`, JSON.stringify(data), { encoding: 'utf8' })
 }
 
 const fileRead = async (category) => {
-  return readFile(`${workDir}/${category}.json`, { encoding: 'utf8' })
+  return readFile(`${taskDir}/${category}.json`, { encoding: 'utf8' })
     .then((data) => JSON.parse(data))
     .catch(async () => {
       await fileWrite(category, [])
@@ -91,8 +92,14 @@ const filterByTime = (tasks, timespan) => {
 
 const filterById = (tasks, id) => tasks.filter((item) => item.taskId === id)
 
-server.get('/api/v1/tasks/', async (req, res) => {
-  await readdir(workDir, (err, categories) => {
+server.get('/image/:fileName', function (req, res) {
+  const file = path.join(imageDir, req.params.fileName)
+  console.log(file)
+  res.sendFile(file)
+})
+
+server.get('/api/v1/tasks/', (req, res) => {
+    readdir(taskDir, (err, categories) => {
     const result = categories.map((category) => {
       return category.substring(0, category.lastIndexOf('.json'))
     })
@@ -198,6 +205,12 @@ server.delete('/api/v1/tasks/:category/:id', async (req, res) => {
   fileWrite(category, taskList)
   res.status(200)
   res.end()
+})
+
+server.get('/img/:fileName', function (req, res) {
+  const file = path.join(imageDir, req.params.fileName)
+  console.log(file)
+  res.sendFile(file)
 })
 
 const [htmlStart, htmlEnd] = Html({
