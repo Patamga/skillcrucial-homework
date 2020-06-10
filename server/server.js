@@ -5,7 +5,7 @@ import bodyParser from 'body-parser'
 import sockjs from 'sockjs'
 import { renderToStaticNodeStream } from 'react-dom/server'
 import React from 'react'
-
+import axios from 'axios'
 import cookieParser from 'cookie-parser'
 import config from './config'
 import Html from '../client/html'
@@ -21,9 +21,9 @@ try {
   //   Root = (props) => <items.Root {...props} />
   //   console.log(JSON.stringify(items.Root))
   // })()
-  console.log(Root)
+
 } catch (ex) {
-  console.log(' run yarn build:prod to enable ssr')
+  // console.log(' run yarn build:prod to enable ssr')
 }
 
 let connections = []
@@ -43,40 +43,32 @@ middleware.forEach((it) => server.use(it))
 
 const { readFile } = require('fs').promises
 
-const workDir = `${process.cwd()}/client/data`
+const workDir = `${process.cwd()}/client/catalog`
 
 const fileRead = async () => {
-  return readFile(`${workDir}/catalog.json`, { encoding: 'utf8' }).then((data) => JSON.parse(data))
+  return readFile(`${workDir}/data.json`, { encoding: 'utf8' }).then((data) => JSON.parse(data))
 }
 
 const readCurrency = async () => {
-  return axios('https://api.exchangeratesapi.io/latest').then(({ data }) => {
-    return data.rates
-  })
+  const { data } = await axios('https://api.exchangeratesapi.io/latest')
+  return data.rates
 }
 
 server.get('/api/v1/catalog', async (req, res) => {
   const catalog = await fileRead()
-  res.json(catalog)
+  res.json(catalog.slise(0, 100))
 })
 
-server.get('/api/v1/usd', async (req, res) => {
-  const currency = await readCurrency()
-  const usd = JSON.stringify(currency.USD)
-  res.json(usd)
-})
-
-server.get('/api/v1/cad', async (req, res) => {
-  const currency = await readCurrency()
-  const cad = JSON.stringify(currency.CAD)
-  res.json(cad)
+server.get('/api/v1/rates', async (req, res) => {
+  const data = await readCurrency()
+  const result = { USD: data.USD, CAD: data.CAD, EUR: 1 }
+  res.send(result)
 })
 
 const [htmlStart, htmlEnd] = Html({
   body: 'separator',
   title: 'Skillcrucial - Become an IT HERO'
 }).split('separator')
-
 
 server.use('/api/', (req, res) => {
   res.status(404)

@@ -1,22 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+// import { useSelector } from 'react-redux'
+// import { updateCurrency } from '../redux/reducers/currencyChange'
 import Head from './head'
 import Header from './header'
 import Sort from './sort'
-import Product from './productCards'
+import Products from './productCards'
 
 const Shop = () => {
+  // const dispatch = useDispatch()
+  const [catalog, setCatalog] = useState([])
+
+  // const currensy = useSelector((store) => store.currencyChange.currensy)
+  // console.log(currensy)
+
+  useEffect(() => {
+    axios.get(`/api/v1/catalog`).then(({ data }) => {
+      setCatalog(data)
+      console.log(data)
+    })
+  }, [])
   return (
-    <div>
+    <div className="bg-gray-200">
       <Head title="Hello" />
       <Header />
       <Sort />
-      <div className="mt-5 space-y-6 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-8 lg:mt-16">
-        <Product />
-        <Product />
-        <Product />
-        <div className="bg-pink-800 hover:text-red-500 text-white font-bold rounded-lg border shadow-lg p-10">
-          This is dummy component
-        </div>
+      {/* {currency} */}
+      <div className="w-full">
+        <Products catalog={catalog} />
       </div>
     </div>
   )

@@ -1,41 +1,32 @@
 import React from 'react'
+import Price from './price'
+import BasketAdd from './AddInBasket'
 
+const Product = (props) => {
 
-const Product = () => {
   return (
-    <div>
-      <div className="flex items-start">
-        <div className="max-w-sm rounded overflow-hidden shadow-lg my-5 mx-10">
-          <img
-            className="w-full"
-            src="https://picsum.photos/420/320?image=25"
-            alt="Sunset in the mountains"
-          />
-          <div className="px-6 py-4">
-            <div className="font-light text-xl mb-2"> Красивое Название товара </div>
-            <p className="font-hairline text-gray-700 text-base">
-              Может быть описание или категория.
-            </p>
-          </div>
-          <div className="text-center  py-2">
-            <div className="font-regular mb-2">
-              <span className="text-pink-700 text-xl px-2"> 20 000</span>
-              <span className="text-pink-700 px-2">$</span>
+    <div className="flex flex-wrap">
+      {props.catalog.map((item) => {
+        return (
+          <div key={item.id} className="flex h-80 mx-2">
+            <div className="border border-gray-400 rounded-lg border-1 my-2 py-2 h-100 w-50 bg-white">
+              <img
+                className="object-contain sm:object-none md:object-none lg:object-none object-scale-down h-48 w-full"
+                src={item.image}
+                alt={item.description}
+              />
+              <div className="px-2 py-2 font-light text-xl mb-2">
+                {item.title}
+                <p className="font-hairline text-gray-700 text-base">{item.description}</p>
+              </div>
+              <Price priseDefault={item.price} />
+              <div className="flex content-end text-white px-2 pb-2">
+                <BasketAdd id={item.id} price={item.price} />
+              </div>
             </div>
           </div>
-          <div className="flex content-end text-white px-6 py-4">
-            <span className="text-4xl bg-gray-400 rounded-full h-16 w-16 flex items-center justify-center">
-              -
-            </span>
-            <span className="text-xl text-center align-bottom font-normal text-gray-400 px-20">
-              5 шт
-            </span>
-            <span className="text-4xl bg-pink-500 rounded-full h-16 w-16 flex items-center justify-center">
-              +
-            </span>
-          </div>
-        </div>
-      </div>
+        )
+      })}
     </div>
   )
 }
