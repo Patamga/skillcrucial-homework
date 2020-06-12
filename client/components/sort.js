@@ -1,4 +1,5 @@
 import React from 'react'
+// import { useDispatch } from 'react-redux'
 
 const Sort = () => {
   return (
@@ -8,7 +9,12 @@ const Sort = () => {
           sort by <span className="text-gray-800 px-1">price</span> &#8645;
         </button>
         <span className="flex mx-5">|</span>
-        <button id="sort-name" type="button" className="flex items-center px-1">
+        <button
+          id="sort-name"
+          type="button"
+          className="flex items-center px-1"
+          // onClick={() => dispatch(sort())}
+        >
           sort by <span className="text-gray-800 px-1"> A - Z </span> &#8645;
         </button>
       </div>

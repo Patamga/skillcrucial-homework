@@ -14,16 +14,14 @@ const Root = () => ''
 
 try {
   // eslint-disable-next-line import/no-unresolved
-  // ;(async () => {
+  // (async () => {
   //   const items = await import('../dist/assets/js/root.bundle')
   //   console.log(JSON.stringify(items))
-
   //   Root = (props) => <items.Root {...props} />
   //   console.log(JSON.stringify(items.Root))
   // })()
-
 } catch (ex) {
-  // console.log(' run yarn build:prod to enable ssr')
+  console.log(' run yarn build:prod to enable ssr')
 }
 
 let connections = []
@@ -41,12 +39,28 @@ const middleware = [
 
 middleware.forEach((it) => server.use(it))
 
-const { readFile } = require('fs').promises
+const { readFile, writeFile, unlink } = require('fs').promises
 
 const workDir = `${process.cwd()}/client/catalog`
-
+const logDir = `${process.cwd()}/logs`
 const fileRead = async () => {
   return readFile(`${workDir}/data.json`, { encoding: 'utf8' }).then((data) => JSON.parse(data))
+}
+
+const LogsWrite = async (data) => {
+  return writeFile(`${logDir}/logs.json`, JSON.stringify(data), { encoding: 'utf8' })
+}
+
+const LogsRead = async () => {
+  return readFile(`${logDir}/logs.json`, { encoding: 'utf8' })
+    .then((data) => JSON.parse(data))
+    .catch(async () => {
+      await LogsWrite([])
+    })
+}
+
+const LogsDelete = async () => {
+  return unlink(`${logDir}/logs.json`)
 }
 
 const readCurrency = async () => {
@@ -56,24 +70,58 @@ const readCurrency = async () => {
 
 server.get('/api/v1/catalog', async (req, res) => {
   const catalog = await fileRead()
-  res.json(catalog.slise(0, 100))
+  res.json(catalog.slice(0, 100))
 })
 
 server.get('/api/v1/rates', async (req, res) => {
-  const data = await readCurrency()
-  const result = { USD: data.USD, CAD: data.CAD, EUR: 1 }
+  const rates = await readCurrency()
+  const result = { USD: rates.USD, CAD: rates.CAD, EUR: 1 }
   res.send(result)
+})
+
+server.get('/api/v1/logs', async (req, res) => {
+  console.log('Log request')
+  await readFile(`${logDir}/logs.json`, { encoding: 'utf8' })
+    .then((data) => {
+      res.send(data)
+    }).catch ((reason) => {
+      console.log('not found', reason)
+      res.status(404)
+    })
+  res.end()
+})
+
+server.post('/api/v1/logs', async (req, res) => {
+
+  let logs = await LogsRead()
+  if (!logs) {
+    logs =[]
+  }
+  if (req.body) {
+    logs = [...logs, req.body]
+    LogsWrite(logs)
+    res.status(200)
+  } else {
+    res.status(400)
+  }
+  res.end()
+})
+
+server.delete('/api/v1/logs', async (req, res) => {
+  await LogsDelete()
+  res.status(200)
+  res.end()
+})
+
+server.use('/api/', (req, res) => {
+  res.status(404)
+  res.end()
 })
 
 const [htmlStart, htmlEnd] = Html({
   body: 'separator',
   title: 'Skillcrucial - Become an IT HERO'
 }).split('separator')
-
-server.use('/api/', (req, res) => {
-  res.status(404)
-  res.end()
-})
 
 server.get('/', (req, res) => {
   const appStream = renderToStaticNodeStream(<Root location={req.url} context={{}} />)

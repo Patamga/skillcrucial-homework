@@ -3,26 +3,24 @@ import Price from './price'
 import BasketAdd from './AddInBasket'
 
 const Product = (props) => {
-
   return (
-    <div className="flex flex-wrap">
+    <div className="card flex flex-wrap content-center justify-center card">
       {props.catalog.map((item) => {
         return (
-          <div key={item.id} className="flex h-80 mx-2">
-            <div className="border border-gray-400 rounded-lg border-1 my-2 py-2 h-100 w-50 bg-white">
-              <img
-                className="object-contain sm:object-none md:object-none lg:object-none object-scale-down h-48 w-full"
-                src={item.image}
-                alt={item.description}
-              />
-              <div className="px-2 py-2 font-light text-xl mb-2">
-                {item.title}
-                <p className="font-hairline text-gray-700 text-base">{item.description}</p>
-              </div>
-              <Price priseDefault={item.price} />
-              <div className="flex content-end text-white px-2 pb-2">
-                <BasketAdd id={item.id} price={item.price} />
-              </div>
+          <div
+            key={item.id}
+            className=" flex flex-col border-1 my-2 py-2 border-gray-400 bg-white rounded-lg h-76 w-64 p-2 m-2"
+          >
+            <div className="flex justify-center">
+              <img className="card__image h-32" src={item.image} alt={item.description} />
+            </div>
+            <div className=" pb-0 mb-0 pt-4 h-32 px-2 py-2 font-light text-l mb-2">
+              {item.title}
+              <p className="mb-0 pb-0 font-hairline text-gray-700 text-sm">{item.description}</p>
+            </div>
+            <Price priseDefault={item.price} />
+            <div className="flex content-end text-white px-2 pb-2">
+              <BasketAdd id={item.id} price={item.price} />
             </div>
           </div>
         )

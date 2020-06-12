@@ -17,7 +17,6 @@ const Shop = () => {
   useEffect(() => {
     axios.get(`/api/v1/catalog`).then(({ data }) => {
       setCatalog(data)
-      console.log(data)
     })
   }, [])
   return (

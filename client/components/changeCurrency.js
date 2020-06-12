@@ -1,11 +1,11 @@
 import React from 'react'
-import { useSelector, useDispatch} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 import './changeCurrency.scss'
 import { updateCurrency } from '../redux/reducers/currencyChange'
 
 const CurrencySelector = () => {
-  const currency = useSelector((store) => store.currencyChange.currensy)
+  const currency = useSelector((store) => store.currencyChange.currency)
 
   const dispatch = useDispatch()
 
@@ -31,7 +31,7 @@ const CurrencySelector = () => {
               className="checkbox-tools"
               onChange={changeCurrency}
             />
-            <label className="for-checkbox-tools" htmlFor="usd">
+            <label className="currency for-checkbox-tools" htmlFor="usd">
               USD &#36;
             </label>
             <input
@@ -43,7 +43,7 @@ const CurrencySelector = () => {
               className="checkbox-tools"
               onChange={changeCurrency}
             />
-            <label className="for-checkbox-tools" htmlFor="eur">
+            <label className="currency for-checkbox-tools" htmlFor="eur">
               EUR &#8364;
             </label>
             <input
@@ -55,7 +55,7 @@ const CurrencySelector = () => {
               className="checkbox-tools"
               onChange={changeCurrency}
             />
-            <label className="for-checkbox-tools" htmlFor="cad">
+            <label className="currency for-checkbox-tools" htmlFor="cad">
               CAD С&#36;
             </label>
           </div>

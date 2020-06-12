@@ -1,22 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-// import { useSelector } from 'react-redux'
 import CurrencySelector from './changeCurrency'
 import BascketHeder from './basketHeader'
 
-
 const Header = () => {
-  // const currency = useSelector((store) => store.currencyChange.currensy)
-  // const currencySymbol = () => {
-  //   switch (currency) {
-  //     case 'USD':
-  //       return <span>$</span>
-  //     case 'CAD':
-  //       return <span>С$</span>
-  //     default:
-  //       return <span>&#8364;</span>
-  //   }
-  // }
   return (
     <div>
       <nav className="flex items-center justify-between text-gray-300 flex-wrap bg-gray-800 p-6">
@@ -43,11 +30,12 @@ const Header = () => {
           </span>
         </div>
         <CurrencySelector />
-
-       <BascketHeder />
+        <BascketHeder />
       </nav>
     </div>
-  )}
+  )
+}
+
 Header.propTypes = {}
 
 export default React.memo(Header)

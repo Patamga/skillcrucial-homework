@@ -47,6 +47,8 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 
+logs
+
 # NodeJS modules folder
 node_modules
 

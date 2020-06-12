@@ -12,7 +12,7 @@ export default (basket = {}, action) => {
       }
 
       if (productQuantity < 1) {
-        const  {
+        const {
           // eslint-disable-next-line
           [productId]: _,
           ...result
@@ -38,7 +38,7 @@ export function addQuantity(id, price) {
   return { type: UPDATE_QUANTTY, id, qty, price }
 }
 
-export function removeQuantity(id,price) {
+export function removeQuantity(id, price) {
   const qty = -1
   return { type: UPDATE_QUANTTY, id, qty, price }
 }

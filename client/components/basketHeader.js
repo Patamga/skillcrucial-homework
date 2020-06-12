@@ -7,36 +7,30 @@ import bascket from './Cart.png'
 const BasketHeader = () => {
   const rate = useSelector((store) => store.currencyChange.rate)
   const currency = useSelector((store) => store.currencyChange.currensy)
-  // const rate = useSelector((store) => store.currencyChange.rate)
 
   const currencySymbol = () => {
     switch (currency) {
-      case "USD":
+      case 'USD':
         return <span>$</span>
       case 'CAD':
         return <span>С$</span>
-        default:
-          return <span>&#8364;</span>
+      default:
+        return <span>&#8364;</span>
     }
   }
   const basket = useSelector((store) => store.basket)
   const [quantity, setQuantity] = useState(0)
   const [amount, setAmount] = useState(0)
-  // let amount = 0
   useEffect(() => {
     const qty = Object.values(basket).reduce((acc, rec) => {
       return acc + rec.qty
     }, 0)
     const amt = Object.values(basket).reduce((acc, rec) => {
-      console.log('rec', rec)
       return acc + rec.price * qty
     }, 0)
-    console.log(qty)
     setQuantity(qty)
     setAmount(amt)
   }, [basket])
-
-
 
   return (
     <div className=" items-center text-gray-200 flex mr-6">
@@ -51,7 +45,7 @@ const BasketHeader = () => {
             {quantity}
           </div>
         )}
-        { amount !== 0 && (
+        {amount !== 0 && (
           <div className="">
             {(amount * rate).toFixed(2)}
             {currencySymbol()}

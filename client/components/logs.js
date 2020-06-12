@@ -1,41 +1,42 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 
 const Logs = () => {
+  const [logs, setLogs] = useState([])
+  useEffect(() => {
+    axios.get('/api/v1/logs').then(({ data }) => {
+      const result = data.map((item) => {
+        const {date, ...rest} = item
+        return {date: `${date}`, data: rest}
+      })
+      console.log('item', result)
+      setLogs(result)
+    })
+  }, [])
+  let i = 0
   return (
     <div>
-      <div className="wx-10 bg-white shadow overflow-hidden sm:rounded-lg">
-        <div className="px-4 py-5 border-b border-gray-400 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">Applicant Information</h3>
-          <p className="mt-1 max-w-2xl text-sm leading-5 text-gray-500">
-            <Link id="brand-name" to="/" className="font-semibold tracking-tight">
-              Home
-            </Link>
-          </p>
-        </div>
-        <div>
-          <dl>
-            <div className="bg-gray-200 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm leading-5 font-medium text-gray-500">Full name</dt>
-              <dd className="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                Margot Foster
-              </dd>
+      {logs.map((item) => {
+
+        return (
+          <div
+            key={item.date}
+            className="flex m-2 wx-10 bg-white shadow overflow-hidden sm:rounded-lg"
+          >
+            <div className="mx-2">{item.date}</div>
+            <div className="flex mx-2">
+              {Object.entries(item.data).map((it) => {
+                i += 1
+                return (
+                  <div className="flex mx-2" key={i}>
+                    {it.toString().split(',').join(' ')}
+                  </div>
+                )
+              })}
             </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm leading-5 font-medium text-gray-500">Application for</dt>
-              <dd className="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                Backend Developer
-              </dd>
-            </div>
-            <div className="bg-gray-200 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm leading-5 font-medium text-gray-500">Email address</dt>
-              <dd className="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
-                margotfoster@example.com
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </div>
+          </div>
+        )
+      })}
     </div>
   )
 }
