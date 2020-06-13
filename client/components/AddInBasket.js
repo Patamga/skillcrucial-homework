@@ -1,12 +1,14 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import './changeCurrency.scss'
-import bascket from './Cart.png'
+import basketImage from './Cart.png'
 
 import { addQuantity, removeQuantity } from '../redux/reducers/basket'
 
 const BasketCard = (props) => {
-  const item = useSelector((store) => store.basket[props.id])
+
+  const item = useSelector((store) => store.basket.items[props.id])
+
   const dispatch = useDispatch()
   const quantity = item && item.qty
 
@@ -18,10 +20,10 @@ const BasketCard = (props) => {
             <button
               className="product__remove text-gray-600 align-middle"
               type="button"
-              onClick={() => dispatch(removeQuantity(props.id, props.price))}
+              onClick={() => dispatch(removeQuantity(props.id, props.title, props.price))}
             >
               <svg
-                fill-current
+
                 viewBox="0 0 35 32"
                 xmlns="http://www.w3.org/2000/svg"
                 stroke="currentColor"
@@ -40,10 +42,10 @@ const BasketCard = (props) => {
             <button
               className="text-indigo-600"
               type="button"
-              onClick={() => dispatch(addQuantity(props.id, props.price))}
+              onClick={() => dispatch(addQuantity(props.id, props.title, props.price))}
             >
               <svg
-                fill-current
+
                 viewBox="0 0 35 32"
                 xmlns="http://www.w3.org/2000/svg"
                 stroke="currentColor"
@@ -65,10 +67,10 @@ const BasketCard = (props) => {
       <button
         className="text-white w-full"
         type="button"
-        onClick={() => dispatch(addQuantity(props.id, props.price))}
+        onClick={() => dispatch(addQuantity(props.id, props.title, props.price))}
       >
         <div className="flex justify-around py-2 bg-gray-600 border-gray-500 rounded-lg">
-          <img className="w-6 h-6 " src={bascket} alt="cart" /> buy
+          <img className="w-6 h-6 " src={basketImage} alt="cart" /> buy
         </div>
       </button>
     </div>

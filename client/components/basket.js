@@ -1,21 +1,33 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import Header from './header'
 import ProductBasket from './basketCard'
+// import { getSum } from '../redux/reducers/basket'
 
 const Basket = () => {
-  const [catalog, setCatalog] = useState([])
+  const catalog = useSelector((store) => store.products)
+  const basket = useSelector((store) => store.basket)
 
-  useEffect(() => {
-    axios.get(`/api/v1/catalog`).then(({ data }) => {
-      setCatalog(data)
-    })
+  const basketList = catalog.reduce((acc, rec) => {
+    if (rec.id in basket) {
+      return [...acc, rec]
+    }
+    return acc
   }, [])
 
   return (
     <div>
       <Header />
-      <ProductBasket catalog={catalog} />
+
+      <div className="card flex flex-wrap content-center justify-center card">
+        {basketList.map((item) => {
+          return (
+            <div key={item.id} className="card flex flex-wrap content-center justify-center card">
+              <ProductBasket item={item} />
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }

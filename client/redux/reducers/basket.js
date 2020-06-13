@@ -1,31 +1,56 @@
-const UPDATE_QUANTTY = 'UPDATE_QUANTTY'
+const UPDATE_BASKET = 'UPDATE_BASKET'
 
-export default (basket = {}, action) => {
+const postLog = (logEntry) => {
+  fetch('/api/v1/logs', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(logEntry)
+  })
+}
+const initialState = {
+  sum: 0,
+  items: {}
+}
+const calculateSum = (items) => {
+  return Object.values(items).reduce((acc, item) => {
+    return acc + item.qty * item.price
+  }, 0)
+}
+export default (basket = initialState, action) => {
   switch (action.type) {
-    case UPDATE_QUANTTY: {
-      const productId = action.id
+    case UPDATE_BASKET: {
       let productQuantity = action.qty
-      const productPrice = action.price
 
-      if (productId in basket) {
-        productQuantity += basket[productId].qty
+      let logMessage = `Product ${action.title} has been added to the basket`
+      if (action.qty < 0) {
+        logMessage = `Product ${action.title} has been removed from the basket`
+      }
+      const logDate = new Date()
+      const logEntry = {
+        date: logDate,
+        message: logMessage
+      }
+      postLog(logEntry)
+
+      if (action.id in basket.items) {
+        productQuantity += basket.items[action.id].qty
       }
 
       if (productQuantity < 1) {
-        const {
-          // eslint-disable-next-line
-          [productId]: _,
-          ...result
-        } = basket
-
-        return result
+        const {[action.id]: _, ...rest} = basket.items
+        const newSum = calculateSum(rest)
+        return { sum: newSum, items: rest }
       }
 
-      const result = {
-        ...basket,
-        [productId]: { qty: productQuantity, price: productPrice }
+      const newItemList = {
+        ...basket.items,
+        [action.id]: { qty: productQuantity, price: action.price }
       }
-
+      const newSum = calculateSum(newItemList)
+      const result = { sum: newSum, items: newItemList }
+      console.log(result)
       return result
     }
     default:
@@ -33,12 +58,13 @@ export default (basket = {}, action) => {
   }
 }
 
-export function addQuantity(id, price) {
+export function addQuantity(id, title, price) {
   const qty = 1
-  return { type: UPDATE_QUANTTY, id, qty, price }
+  const action = { type: UPDATE_BASKET, id, title, qty, price }
+  return action
 }
 
-export function removeQuantity(id, price) {
+export function removeQuantity(id, title, price) {
   const qty = -1
-  return { type: UPDATE_QUANTTY, id, qty, price }
+  return { type: UPDATE_BASKET, id, title, qty, price }
 }

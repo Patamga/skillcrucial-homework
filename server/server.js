@@ -80,7 +80,6 @@ server.get('/api/v1/rates', async (req, res) => {
 })
 
 server.get('/api/v1/logs', async (req, res) => {
-  console.log('Log request')
   await readFile(`${logDir}/logs.json`, { encoding: 'utf8' })
     .then((data) => {
       res.send(data)
