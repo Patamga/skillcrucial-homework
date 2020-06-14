@@ -42,7 +42,7 @@ middleware.forEach((it) => server.use(it))
 const { readFile, writeFile, unlink } = require('fs').promises
 
 const workDir = `${process.cwd()}/client/catalog`
-const logDir = `${process.cwd()}/logs`
+const logDir = `${process.cwd()}/`
 const fileRead = async () => {
   return readFile(`${workDir}/data.json`, { encoding: 'utf8' }).then((data) => JSON.parse(data))
 }
