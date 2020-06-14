@@ -4,7 +4,6 @@ import { AppContainer } from 'react-hot-loader'
 import Root from './config/root'
 
 import './assets/scss/main.scss'
-import './assets/scss/add.scss'
 
 const target = document.getElementById('root')
 
