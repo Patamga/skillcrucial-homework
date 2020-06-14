@@ -29,7 +29,6 @@ const postLog = (logEntry) => {
 }
 
 export default (state = initialState, action) => {
-
   switch (action.type) {
     case GET_PRODUCTS:
       return action.list

@@ -39,7 +39,7 @@ export default (basket = initialState, action) => {
       }
 
       if (productQuantity < 1) {
-        const {[action.id]: _, ...rest} = basket.items
+        const { [action.id]: _, ...rest } = basket.items
         const newSum = calculateSum(rest)
         return { sum: newSum, items: rest }
       }
@@ -50,7 +50,6 @@ export default (basket = initialState, action) => {
       }
       const newSum = calculateSum(newItemList)
       const result = { sum: newSum, items: newItemList }
-      console.log(result)
       return result
     }
     default:

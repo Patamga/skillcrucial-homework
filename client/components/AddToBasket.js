@@ -6,9 +6,7 @@ import basketImage from './Cart.png'
 import { addQuantity, removeQuantity } from '../redux/reducers/basket'
 
 const BasketCard = (props) => {
-
   const item = useSelector((store) => store.basket.items[props.id])
-
   const dispatch = useDispatch()
   const quantity = item && item.qty
 
@@ -16,14 +14,18 @@ const BasketCard = (props) => {
     return (
       <div className="Flex w-full">
         <div className="flex w-full border-2 border-gray-300 border-solid rounded-lg grid grid-cols-3 divide-x divide-gray-400">
-          <div className="px-2 text-xl text-left">
+          <div className="px-2 text-base text-left">
             <button
-              className="product__remove text-gray-600 align-middle"
+              className="product__remove text-gray-600 align-middle
+              hover:text-gray-700
+            active:bg-gray-500
+            focus:outline-none focus:shadow-inner
+            focus:border-gray-800
+            shadow-sm"
               type="button"
               onClick={() => dispatch(removeQuantity(props.id, props.title, props.price))}
             >
               <svg
-
                 viewBox="0 0 35 32"
                 xmlns="http://www.w3.org/2000/svg"
                 stroke="currentColor"
@@ -33,19 +35,21 @@ const BasketCard = (props) => {
               </svg>
             </button>
           </div>
-          <div className="justify-center text-center">
-            <span className="card__product-amount product__amout font-hairline text-gray-700 text-2xl w-6 text-center font-normal text-gray-700">
+          <div className="justify-center text-center pt-1">
+            <span className="card__product-amount product__amout pb-2 text-gray-700 text-xl w-6 text-center font-normal ">
               {quantity}
             </span>
           </div>
           <div className="px-2 text-xl text-right">
             <button
-              className="text-indigo-600"
+              className="text-indigo-600
+              hover:text-indigo-600
+            active:
+            focus:outline-none focus:shadow-inner"
               type="button"
               onClick={() => dispatch(addQuantity(props.id, props.title, props.price))}
             >
               <svg
-
                 viewBox="0 0 35 32"
                 xmlns="http://www.w3.org/2000/svg"
                 stroke="currentColor"

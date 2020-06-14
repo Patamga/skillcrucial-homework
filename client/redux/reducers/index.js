@@ -4,6 +4,7 @@ import currencyChange from './currencyChange'
 import basket from './basket'
 import products from './products'
 
+
 const createRootReducer = (history) =>
   combineReducers({
     router: connectRouter(history),

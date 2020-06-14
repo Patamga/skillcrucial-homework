@@ -1,5 +1,4 @@
 const CHANGE_CURRENCY = 'CHANGE_CURRENCY'
-// const UPDATE_RATE = 'UPDATE_RATE'
 
 const initialState = {
   currency: 'EUR',
@@ -17,10 +16,12 @@ const postLog = (logEntry) => {
 }
 
 export default (state = initialState, action) => {
-
   switch (action.type) {
     case CHANGE_CURRENCY: {
-      const logEntry = {date: new Date(), message: `Currency changed from ${state.currency} to ${action.currency}`}
+      const logEntry = {
+        date: new Date(),
+        message: `Currency changed from ${state.currency} to ${action.currency}`
+      }
       postLog(logEntry)
       return {
         ...state,

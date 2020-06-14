@@ -20,7 +20,3 @@ const Shop = () => {
 Shop.propTypes = {}
 
 export default React.memo(Shop)
-
-
-
-

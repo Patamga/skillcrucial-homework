@@ -4,18 +4,16 @@ import { Link } from 'react-router-dom'
 import './changeCurrency.scss'
 import bascket from './Cart.png'
 import CarencySimbol from './carencySymbol'
+import TotalAmount from './totalAmount'
 
 const BasketHeader = () => {
-  const rate = useSelector((store) => store.currencyChange.rate)
   const basket = useSelector((store) => store.basket)
   const [quantity, setQuantity] = useState(0)
-  const [amount, setAmount] = useState(0)
   useEffect(() => {
     const qty = Object.values(basket.items).reduce((acc, rec) => {
       return acc + rec.qty
     }, 0)
     setQuantity(qty)
-    setAmount(basket.sum)
   }, [basket])
 
   return (
@@ -31,9 +29,9 @@ const BasketHeader = () => {
             {quantity}
           </div>
         )}
-        {amount !== 0 && (
+        {basket.sum !== 0 && (
           <div className="">
-            {(amount * rate).toFixed(2)}
+            <TotalAmount />
             <CarencySimbol />
           </div>
         )}
