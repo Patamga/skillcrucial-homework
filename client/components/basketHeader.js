@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import './changeCurrency.scss'
 import bascket from './Cart.png'
 import CarencySimbol from './carencySymbol'
 import TotalAmount from './totalAmount'

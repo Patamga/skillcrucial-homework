@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
-import './changeCurrency.scss'
 import { updateCurrency } from '../redux/reducers/currencyChange'
 
 const CurrencySelector = () => {

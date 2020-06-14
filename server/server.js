@@ -12,17 +12,17 @@ import Html from '../client/html'
 
 const Root = () => ''
 
-try {
-  // eslint-disable-next-line import/no-unresolved
-  // (async () => {
-  //   const items = await import('../dist/assets/js/root.bundle')
-  //   console.log(JSON.stringify(items))
-  //   Root = (props) => <items.Root {...props} />
-  //   console.log(JSON.stringify(items.Root))
-  // })()
-} catch (ex) {
-  console.log(' run yarn build:prod to enable ssr')
-}
+// try {
+//   // eslint-disable-next-line import/no-unresolved
+//   // (async () => {
+//   //   const items = await import('../dist/assets/js/root.bundle')
+//   //   console.log(JSON.stringify(items))
+//   //   Root = (props) => <items.Root {...props} />
+//   //   console.log(JSON.stringify(items.Root))
+//   // })()
+// } catch (ex) {
+//   console.log(' run yarn build:prod to enable ssr')
+// }
 
 let connections = []
 
@@ -83,18 +83,17 @@ server.get('/api/v1/logs', async (req, res) => {
   await readFile(`${logDir}/logs.json`, { encoding: 'utf8' })
     .then((data) => {
       res.send(data)
-    }).catch ((reason) => {
-      console.log('not found', reason)
+    })
+    .catch(() => {
       res.status(404)
     })
   res.end()
 })
 
 server.post('/api/v1/logs', async (req, res) => {
-
   let logs = await LogsRead()
   if (!logs) {
-    logs =[]
+    logs = []
   }
   if (req.body) {
     logs = [...logs, req.body]

@@ -1,6 +1,8 @@
 /* purgecss start ignore */
 @tailwind  base;
 @tailwind  components;
+@import "./changeCurrency.scss";
+
 /* purgecss end ignore */
 
 @tailwind utilities;
