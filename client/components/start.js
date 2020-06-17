@@ -1,36 +1,27 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
-import { Route } from 'react-router-dom'
-import { history } from '../redux'
 import { updateField } from '../redux/reducers/game'
 import Head from './head'
 import Field from './field'
 
 const Dummy = () => {
   const dispatch = useDispatch()
-  const [rowSize, setRowSize] = useState('')
-  const [columnSize, setColumnSize] = useState('')
-  // const [playItems, setPlayItems] = useState([])
 
   const re = /^[0-9]*$/
   const onChangeRow = (e) => {
     if (re.test(e.target.value)) {
-      const newValue = e.target.value
-      setRowSize(newValue)
+      let row = e.target.value
+      dispatch(updateField(row))
     }
   }
   const onChangeColumn = (e) => {
     if (re.test(e.target.value)) {
-      const newValue = e.target.value
-      setColumnSize(newValue)
+      let column = e.target.value
+      dispatch(updateField(column))
     }
   }
-  const length = rowSize * columnSize
 
-  const clicked = () => {
-    dispatch(updateField(rowSize, columnSize, length))
-    history.push('/game')
-  }
+  // const qtySquare = rowSize * columnSize
 
   // const fieldSize = (size) => {
   //   const arr = new Array(size).fill(1).map((it, index) => {
@@ -62,13 +53,13 @@ const Dummy = () => {
             <button
               type="button"
               disabled={!(columnSize > 0 && rowSize > 0)}
-              onClick={() => clicked()}
+              onClick={() => fieldSize(qtySquare)}
               className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-3 px-4  border border-blue-500 hover:border-transparent rounded"
             >
               START
             </button>
           </div>
-          <Route exact path="/game" component={() => <Field />} />
+          <Field playItems={playItems} columnSize={columnSize} />
         </div>
       </div>
     </div>
