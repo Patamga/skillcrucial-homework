@@ -1,34 +1,64 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import Square from './square'
-import { newNumber } from '../redux/reducers/number'
+import React, {useState} from 'react'
+import { useSelector } from 'react-redux'
 
 const Field = () => {
   const data = useSelector((store) => store.game)
-  const dispatch = useDispatch()
+  const [RandomNumber, setRandomNumber] = useState()
 
-  const arrfieldSize = (size) => {
+  const cellColor = {
+    yellow: 'w-12 h-12 bg-yellow-400 m-1 m-1',
+    gray: 'w-12 h-12 bg-gray-400 m-1 m-1',
+    green: 'w-12 h-12 bg-green-400 m-1 m-1',
+    red: 'w-12 h-12 bg-red-400 m-1 m-1'
+  }
+
+  const fieldSize = (size) => {
     const arr = new Array(size).fill(1).map((it, index) => {
       return index + 1
     })
     return arr
   }
-  const arrField = arrfieldSize(data.lenght)
-
-  useEffect(() => {
+  const field = fieldSize(data.lenght)
+  const selected = []
+  // useEffect(() => {
     setInterval(() => {
-     const number = arrField[Math.floor(Math.random() * arrField.length)]
-      dispatch(newNumber(number))
-      // clearInterval(intervalId)
-    }, 2000)
+      const number = field[Math.floor(Math.random() * field.length)]
+      setRandomNumber(number)
+      console.log(number)
 
-  }, [])
+
+      // clearInterval(intervalId)
+    }, 1000)
+
+  // }, [])
+
+  const color = (idSquare) => {
+    if (idSquare === RandomNumber) {
+      return cellColor.yellow
+    }
+    return cellColor.gray
+  }
+  // useEffect(() => {
+  //   if (numberActive === id) {
+  //     setColor(cellColor.yellow)
+  //     // setTimeout(paint, 5000)
+  //   }
+  // }, [numberActive])
 
   return (
     <div className=" flex items-center justify-center h-screen">
       <div className={`inline-grid grid-cols-${data.column} gap-1`}>
-        {arrField.map((item, index) => {
-          return <Square item={item} key={index} />
+        {field.map((item, index) => {
+          return (
+            <div
+              id={item}
+              key={index}
+              className={color(item)}
+              // {/* onChange={onChange} */}
+            >
+              {" "}
+            </div>
+          )
         })}
       </div>
     </div>
