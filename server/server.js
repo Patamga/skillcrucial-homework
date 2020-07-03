@@ -5,12 +5,24 @@ import bodyParser from 'body-parser'
 import sockjs from 'sockjs'
 import { renderToStaticNodeStream } from 'react-dom/server'
 import React from 'react'
-
 import cookieParser from 'cookie-parser'
+import passport from 'passport'
+import jwt from 'jsonwebtoken'
+import mongooseService from './services/mongoose'
+import passportJWT from './services/passport'
 import config from './config'
 import Html from '../client/html'
+import User from './model/User.model'
 
 const Root = () => ''
+
+mongooseService.connect()
+
+// const user = new User({
+//   email: 'test2@gmail.com',
+//   password: 'test2'
+// })
+// user.save()
 
 try {
   // eslint-disable-next-line import/no-unresolved
@@ -33,13 +45,31 @@ const server = express()
 
 const middleware = [
   cors(),
+  passport.initialize(),
   express.static(path.resolve(__dirname, '../dist/assets')),
   bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }),
   bodyParser.json({ limit: '50mb', extended: true }),
   cookieParser()
 ]
+  passport.use('jwt', passportJWT.jwt);
 
 middleware.forEach((it) => server.use(it))
+
+server.post('/api/v1/auth', async (req, res) => {
+  // console.log(req.body)
+  try {
+    const user = await User.findAndValidateUser(req.body)
+
+    const payload = { uid: user.id }
+    const token = jwt.sign(payload, config.secret, { expiresIn: '48h' })
+    delete user.password
+    res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 48 })
+    res.json({ status: 'ok', token, user })
+  } catch (err) {
+    console.log(err)
+    res.json({ status: 'error', err })
+  }
+})
 
 server.use('/api/', (req, res) => {
   res.status(404)
