@@ -8,8 +8,11 @@ import React from 'react'
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
 import jwt from 'jsonwebtoken'
+
 import mongooseService from './services/mongoose'
 import passportJWT from './services/passport'
+import auth from './middleware/auth'
+
 import config from './config'
 import Html from '../client/html'
 import User from './model/User.model'
@@ -19,8 +22,8 @@ const Root = () => ''
 mongooseService.connect()
 
 // const user = new User({
-//   email: 'test2@gmail.com',
-//   password: 'test2'
+//   email: 'test5@gmail.com',
+//   password: 'test5'
 // })
 // user.save()
 
@@ -54,6 +57,10 @@ const middleware = [
   passport.use('jwt', passportJWT.jwt);
 
 middleware.forEach((it) => server.use(it))
+
+server.get('/api/v1/user-info', auth(['admin']), (req, res) => {
+  res.json({ status: '123' })
+})
 
 server.get('/api/v1/auth', async (req, res) => {
   try {

@@ -1,19 +1,21 @@
 import React from 'react'
-import Head from './head'
+import Sidebar from './sidebar'
+// import { useSelector } from 'react-redux'
+// import { Route } from 'react-router-dom'
+import ChatContent from "./chat"
+// import ChatChannel from './chatsChannel'
 
-const Private = () => {
+// const userId = 42
+const Slack = () => {
   return (
-    <div>
-      <Head title="Hello" />
-      <div className="flex items-center justify-center h-screen">
-        <div className="bg-indigo-800 hover:text-red-500 text-white font-bold rounded-lg border shadow-lg p-10">
-          This is private component
-        </div>
+    <div className="w-full border shadow">
+      <div className="flex">
+        <Sidebar />
+        <ChatContent />
       </div>
     </div>
   )
 }
+Slack.propTypes = {}
 
-Private.propTypes = {}
-
-export default React.memo(Private)
+export default React.memo(Slack)
