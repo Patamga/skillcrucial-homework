@@ -3,6 +3,11 @@ import bcrypt from 'bcrypt-nodejs'
 
 const userSchema = new mongoose.Schema(
   {
+    username: {
+      type: String,
+      required: true,
+      unique: true
+    },
     email: {
       type: String,
       required: true,
@@ -47,19 +52,63 @@ userSchema.statics = {
     if (!password) {
       throw new Error('No Password')
     }
-
     const user = await this.findOne({ email }).exec()
     if (!user) {
       throw new Error('No User')
     }
-
     const isPasswordOk = await user.passwordMatches(password)
-
     if (!isPasswordOk) {
       throw new Error('PasswordIncorrect')
     }
-
     return user
+  },
+
+  async createAccount({ email, username, password }) {
+    if (!email) {
+      throw new Error('Email ')
+    }
+
+    const user = await this.findOne({ email }).exec()
+    if (user) {
+      throw Error('Already exists')
+    }
+    let newUser = new this({
+      username,
+      email,
+      password
+    })
+    await newUser.save( (err, savedUser) => {
+      if (err) {
+        throw Error('Save error')
+      }
+      newUser = savedUser
+    })
+    return newUser
   }
 }
+
+// userSchema.statics = {
+//   async createAccount({ email, username, password }) {
+//     if (!email) {
+//       throw new Error('Email ')
+//     }
+
+//     const user = await this.findOne({ email }).exec()
+//     if (user) {
+//       throw Error('Already exists')
+//     }
+//     let newUser = new this({
+//       username,
+//       email,
+//       password
+//     })
+//     await newUser.save( (err, savedUser) => {
+//       if (err) {
+//         throw Error('Save error')
+//       }
+//       newUser = savedUser
+//     })
+//     return newUser
+//   }
+// }
 export default mongoose.model('users', userSchema)

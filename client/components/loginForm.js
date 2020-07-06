@@ -1,6 +1,8 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { updateLoginField, updatePasswordField, signIn } from '../redux/reducers/auth'
+
 
 const LoginForm = () => {
   const dispatch = useDispatch()
@@ -30,7 +32,7 @@ const LoginForm = () => {
               Password
             </label>
             <input
-              className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               name="password"
               type="password"
@@ -40,22 +42,22 @@ const LoginForm = () => {
                 dispatch(updatePasswordField(e.target.value))
               }}
             />
-            <p className="text-red-500 text-xs italic">Please choose a password.</p>
+            {/* <p className="text-red-500 text-xs italic">Please choose a password.</p> */}
           </div>
           <div className="flex items-center justify-between">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-pink-700 hover:bg-pink-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
               onClick={() => dispatch(signIn())}
             >
               Sign In
             </button>
-            {/* <a
-            className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-            href="#"
-          >
-            Forgot Password?
-          </a> */}
+            <Link
+              className="inline-block align-baseline font-bold text-sm text-pink-700 hover:text-blue-800"
+              to="/registration"
+            >
+              REGESTRATION
+            </Link>
           </div>
         </form>
       </div>
