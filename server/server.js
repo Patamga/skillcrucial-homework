@@ -16,16 +16,33 @@ import auth from './middleware/auth'
 import config from './config'
 import Html from '../client/html'
 import User from './model/User.model'
+import Channel from './model/Channel.model'
 
 const Root = () => ''
 
 mongooseService.connect()
 
 // const user = new User({
-//   email: 'test5@gmail.com',
-//   password: 'test5'
+//   email: 'test6@gmail.com',
+//   password: 'test6'
 // })
 // user.save()
+
+// const channel = new Channel({
+//   channelName: 'main',
+//   usersId: ['112', '113', '114'],
+//   messages: [
+//     {
+//     userId: '114',
+//     text: 'You can configure those colors explicitly',
+//     },
+//     {
+//     userId: '112',
+//     text: 'Bad news: color is complicated and weve yet to find a tool that does a good job generating these sorts of color palettes. We picked all of Tailwinds default colors by hand, balancing them by eye. Sorry!',
+//     }
+//   ]
+// })
+// channel.save()
 
 try {
   // eslint-disable-next-line import/no-unresolved
@@ -60,6 +77,38 @@ middleware.forEach((it) => server.use(it))
 
 server.get('/api/v1/user-info', auth(['admin']), (req, res) => {
   res.json({ status: '123' })
+})
+
+server.get('/api/v1/channels', async (req, res) => {
+  Channel.find({}, (err, channels) => {
+    console.log('Channels', channels)
+    if (!err) {
+      res.send(channels)
+    } else {
+      res.send(err)
+    }
+  res.end()
+  })
+})
+
+server.post('/api/v1/channels', async (req, res) => {
+
+  const channel = new Channel({
+    channelName: req.body.channelName,
+    usersId: req.body.usersId,
+  })
+  channel.save((err) => {
+    if (!err) {
+      Channel.find({}, (err, channels) => {
+        if (!err) {
+          res.send(channels)
+        } else {
+          res.send(err)
+        }
+        res.end()
+      })
+    }
+  })
 })
 
 server.get('/api/v1/auth', async (req, res) => {

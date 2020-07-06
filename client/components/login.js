@@ -4,8 +4,8 @@ import { updateLoginField, updatePasswordField, signIn } from '../redux/reducers
 
 const LoginForm = () => {
   const dispatch = useDispatch()
-  const login = useSelector((state) => state.auth.login)
-  const password = useSelector((state) => state.auth.password)
+  const login = useSelector((s) => s.auth.login)
+  const password = useSelector((s) => s.auth.password)
   return (
     <div className="w-screen h-screen bg-gray-100 flex justify-center items-center ">
       <div className="w-full max-w-xs">
