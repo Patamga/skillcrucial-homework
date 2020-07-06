@@ -69,7 +69,6 @@ export function updatePasswordField(password) {
 
 export function create() {
   return (dispatch, getState) => {
-    console.log('ffffffffff44444', getState)
     const { email, password, username } = getState().registration
 
     fetch('/api/v1/registration', {

@@ -1,31 +1,29 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { initUserChannels } from '../redux/reducers/chan'
+import { initUsers } from '../redux/reducers/users'
 // import { useSelector } from 'react-redux'
 import { history } from '../redux'
 
-const ChenalList = () => {
+const UsersList = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-      dispatch(initUserChannels())
+    dispatch(initUsers())
   }, [])
 
-
-  const channels = useSelector((store) => store.chan)
+  const users = useSelector((store) => store.users)
 
   // const channels = useSelector((store) => store.channelList)
 
-
   return (
     <div>
-      {channels.map((item) => {
-        const channel = item.channelName
+      {users.map((item) => {
+        const user = item.username
         return (
-          <div key={item.channelName} className="px-4 mb-2 text-white font-semi-bold ">
+          <div key={item.usernsme} className="px-4 mb-2 text-white font-semi-bold ">
             <li className="list-none">
-              <button type="button" onClick={() => history.push(`/private/${channel}`)}>
+              <button type="button" onClick={() => history.push(`/private/${user}`)}>
                 <span className="pr-1 text-gray-400">#</span>
-                {channel}
+                {user}
               </button>
             </li>
           </div>
@@ -35,6 +33,6 @@ const ChenalList = () => {
   )
 }
 
-ChenalList.propTypes = {}
+UsersList.propTypes = {}
 
-export default ChenalList
+export default UsersList

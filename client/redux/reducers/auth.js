@@ -51,15 +51,15 @@ export function trySignIn() {
   }
 }
 
-export function tryGetUserInfo() {
-  return () => {
-    fetch('/api/v1/user-info')
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-      })
-  }
-}
+// export function tryGetUserInfo() {
+//   return () => {
+//     fetch('/api/v1/user-info')
+//       .then((res) => res.json())
+//       .then((data) => {
+//         console.log(data)
+//       })
+//   }
+// }
 
 export function signIn() {
   return (dispatch, getState) => {

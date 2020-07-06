@@ -79,6 +79,18 @@ server.get('/api/v1/user-info', auth(['admin']), (req, res) => {
   res.json({ status: '123' })
 })
 
+server.get('/api/v1/users', async (req, res) => {
+  User.find({}, (err, users) => {
+    console.log('users', users)
+    if (!err) {
+      res.send(users)
+    } else {
+      res.send(err)
+    }
+    res.end()
+  })
+})
+
 server.get('/api/v1/channels', async (req, res) => {
   Channel.find({}, (err, channels) => {
     console.log('Channels', channels)

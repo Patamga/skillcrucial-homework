@@ -1,5 +1,6 @@
 import React from 'react'
 import ChanelList from './channelList'
+import UsersList from './usersList'
 
 const Sidebar = () => {
   return (
@@ -31,6 +32,7 @@ const Sidebar = () => {
       </div>
 
       <div className="px-4 mb-3 font-sans">Direct Messages</div>
+      <UsersList />
 
       <div className="flex items-center mb-3 px-4">
         <span className="bg-green-500 rounded-full block w-2 h-2 mr-2"> </span>
