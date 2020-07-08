@@ -23,7 +23,7 @@ const channelSchema = new mongoose.Schema(
     channelName: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     usersId: {
       type: [String]

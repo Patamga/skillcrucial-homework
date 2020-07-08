@@ -1,20 +1,16 @@
 import React, { useEffect } from 'react'
+
 import { useSelector, useDispatch } from 'react-redux'
-import { initUserChannels } from '../redux/reducers/chan'
-// import { useSelector } from 'react-redux'
+import { initUserChannels } from '../redux/reducers/channelList'
 import { history } from '../redux'
 
-const ChenalList = () => {
+const ChenalList = (props) => {
+  const channels = useSelector((store) => store.channelList)
   const dispatch = useDispatch()
+
   useEffect(() => {
-      dispatch(initUserChannels())
-  }, [])
-
-
-  const channels = useSelector((store) => store.chan)
-
-  // const channels = useSelector((store) => store.channelList)
-
+    dispatch(initUserChannels(props.userId))
+  }, [props.userId])
 
   return (
     <div>

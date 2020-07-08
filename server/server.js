@@ -8,7 +8,6 @@ import React from 'react'
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
 import jwt from 'jsonwebtoken'
-
 import mongooseService from './services/mongoose'
 import passportJWT from './services/passport'
 import auth from './middleware/auth'
@@ -21,28 +20,6 @@ import Channel from './model/Channel.model'
 const Root = () => ''
 
 mongooseService.connect()
-
-// const user = new User({
-//   email: 'test6@gmail.com',
-//   password: 'test6'
-// })
-// user.save()
-
-// const channel = new Channel({
-//   channelName: 'main',
-//   usersId: ['112', '113', '114'],
-//   messages: [
-//     {
-//     userId: '114',
-//     text: 'You can configure those colors explicitly',
-//     },
-//     {
-//     userId: '112',
-//     text: 'Bad news: color is complicated and weve yet to find a tool that does a good job generating these sorts of color palettes. We picked all of Tailwinds default colors by hand, balancing them by eye. Sorry!',
-//     }
-//   ]
-// })
-// channel.save()
 
 try {
   // eslint-disable-next-line import/no-unresolved
@@ -75,12 +52,12 @@ const middleware = [
 
 middleware.forEach((it) => server.use(it))
 
-server.get('/api/v1/user-info', auth(['admin']), (req, res) => {
-  res.json({ status: '123' })
-})
+// server.get('/api/v1/user-info', auth(['admin']), (req, res) => {
+//   res.json({ status: '123' })
+// })
 
 server.get('/api/v1/users', async (req, res) => {
-  User.find({}, (err, users) => {
+  await User.find({}, (err, users) => {
     console.log('users', users)
     if (!err) {
       res.send(users)
@@ -92,7 +69,8 @@ server.get('/api/v1/users', async (req, res) => {
 })
 
 server.get('/api/v1/channels', async (req, res) => {
-  Channel.find({}, (err, channels) => {
+  await Channel.find({}, (err, channels) => {
+  // await Channel.find({}, 'channelName usersId', (err, channels) => {
     console.log('Channels', channels)
     if (!err) {
       res.send(channels)
@@ -104,10 +82,10 @@ server.get('/api/v1/channels', async (req, res) => {
 })
 
 server.post('/api/v1/channels', async (req, res) => {
-
   const channel = new Channel({
     channelName: req.body.channelName,
-    usersId: req.body.usersId,
+    usersId: req.body.userId,
+    messages: req.body.messages
   })
   channel.save((err) => {
     if (!err) {
@@ -122,6 +100,41 @@ server.post('/api/v1/channels', async (req, res) => {
     }
   })
 })
+
+server.get('/api/v1/channels/:userid', async (req, res) => {
+  const userid = req.params.userid
+    Channel.find({ usersId: userid }, (err, channels) => {
+      if (!err) {
+        res.send(channels)
+      } else {
+        res.send(err)
+      }
+      res.end()
+    })
+})
+
+server.post('/api/v1/add_channel', async (req, res) => {
+  // надо удалить результат поиска
+  const userid = req.body.userId
+  const channel = new Channel({
+    channelName: req.body.channelName,
+    usersId: req.body.userId,
+    messages: req.body.messages
+  })
+  channel.save((err) => {
+    if (!err) {
+      Channel.find({ usersId: userid }, (err, channels) => {
+        if (!err) {
+          res.send(channels)
+        } else {
+          res.send(err)
+        }
+        res.end()
+      })
+    }
+  })
+})
+
 
 server.get('/api/v1/auth', async (req, res) => {
   try {
@@ -162,8 +175,6 @@ server.post('/api/v1/registration', async (req, res) => {
     const payload = { uid: user.id }
     const token = jwt.sign(payload, config.secret, { expiresIn: '48h' })
     delete user.password
-
-
     res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 48 })
     res.json({ status: 'ok', token, user })
   } catch (err) {

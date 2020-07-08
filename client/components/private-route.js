@@ -1,17 +1,23 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import Sidebar from './sidebar'
-// import { useSelector } from 'react-redux'
-// import { Route } from 'react-router-dom'
-import ChatContent from "./chat"
-// import ChatChannel from './chatsChannel'
 
-// const userId = 42
+// import { Route } from 'react-router-dom'
+import TopBar from './topBar'
+import AddMessage from './addMessage'
+import ChatContent from './chatContent'
+
 const Slack = () => {
+  const currentUser = useSelector((store) => store.auth.user)
   return (
     <div className="w-full border shadow">
       <div className="flex">
-        <Sidebar />
-        <ChatContent />
+        <Sidebar currentUser={currentUser} />
+        <div className="w-full flex flex-col bg-gray-100">
+          <TopBar />
+          <ChatContent />
+          <AddMessage />
+        </div>
       </div>
     </div>
   )

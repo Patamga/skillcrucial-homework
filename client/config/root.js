@@ -19,7 +19,7 @@ const OnlyAnonymousRoute = ({ component: Component, ...rest }) => {
   const auth = useSelector((s) => s.auth)
   const func = (props) =>
     !!auth.user && !!auth.token ? (
-      <Redirect to={{ pathname: '/private' }} />
+      <Redirect to={{ pathname: '/private/*' }} />
     ) : (
       <Component {...props} />
     )
@@ -80,7 +80,10 @@ const RootComponent = (props) => {
             <OnlyAnonymousRoute exact path="/registration" component={() => <Registration />} />
             <Route exact path="/" component={() => <Home />} />
             <Route exact path="/dashboard" component={() => <DummyView />} />
+            <PrivateRoute exact path="/private/*" component={() => <PrivateComponent />} />
             <PrivateRoute exact path="/private" component={() => <PrivateComponent />} />
+            <PrivateRoute exact path="/private/:channel" component={() => <PrivateComponent />} />
+
             <Route component={() => <NotFound />} />
           </Switch>
         </Startup>
