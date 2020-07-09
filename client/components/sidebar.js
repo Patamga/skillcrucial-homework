@@ -2,14 +2,11 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { history } from '../redux'
 import ChanelList from './channelList'
-import UsersList from './list'
+import UsersList from './listUsers'
 
 const Sidebar = () => {
   const currentUser = useSelector((store) => store.auth.user)
-  const currentChannel = useSelector((store) => store.channel)
   const userId = currentUser._id
-
-  console.log('sitebar channel', currentChannel)
 
   return (
     <div className="bg-blue-800 text-blue-300 w-2/5  hidden md:block">

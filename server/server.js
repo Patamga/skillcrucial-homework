@@ -85,8 +85,8 @@ server.post('/api/v1/userschannel', async (req, res) => {
 })
 
 server.get('/api/v1/channels', async (req, res) => {
-  await Channel.find({}, (err, channels) => {
-  // await Channel.find({}, 'channelName usersId', (err, channels) => {
+  // await Channel.find({}, (err, channels) => {
+  await Channel.find({}, 'channelName usersId', (err, channels) => {
     console.log('Channels', channels)
     if (!err) {
       res.send(channels)
@@ -133,7 +133,7 @@ server.get('/api/v1/channel/:name', async (req, res) => {
   const name = req.params.name
   Channel.findOne({ channelName: name }, (err, channel) => {
     if (!err) {
-      res.send(channel)
+      res.send(JSON.stringify(channel))
     } else {
       res.send(err)
     }

@@ -6,6 +6,7 @@ import registration from './registration'
 import users from './users'
 import addChannel from './addChannel'
 import channel from './channel'
+import user from './user'
 // import UsersInChannel from './UsersInChannel'
 
 const createRootReducer = (history) =>
@@ -17,6 +18,7 @@ const createRootReducer = (history) =>
     users,
     addChannel,
     channel,
+    user
     // UsersInChannel
   })
 

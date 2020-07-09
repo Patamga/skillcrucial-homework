@@ -41,13 +41,8 @@ export function createChannel(id) {
         userId
       })
     })
-      .then((res) => {
-        console.log(res.ok, res)
-        if (!res.ok) throw res
-        return res.json()
-      })
+      .then((res) => res.json())
       .then((data) => {
-        console.log('data', data)
         dispatch({ type: CHANNEL, channelName: data.channelName, userId: data._id })
         history.push(`/private/${channelName}`)
         dispatch(currentChannels(data.channelName))

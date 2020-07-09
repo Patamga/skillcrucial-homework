@@ -36,7 +36,7 @@ const ChannelForm = (props) => {
             </button>
             <Link
               className="inline-block align-baseline font-bold text-sm text-teal-600 hover:text-teal-700"
-              to="/private/channel_list"
+              to="/private/allchannels"
             >
                CHOOSE
             </Link>

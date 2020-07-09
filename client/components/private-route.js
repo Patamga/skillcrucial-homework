@@ -3,6 +3,7 @@ import Sidebar from './sidebar'
 import ChatContent from './chatContent'
 
 const Slack = () => {
+  
   return (
     <div className="w-full border shadow">
       <div className="flex">

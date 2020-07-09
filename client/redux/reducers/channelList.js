@@ -1,6 +1,7 @@
 const INIT_USER_CHANNELS = 'INIT_USER_CHANNELS'
 
 
+
 const initialState = []
 
 export default (state = initialState, action) => {

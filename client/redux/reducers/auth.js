@@ -1,4 +1,5 @@
 import Cookies from 'universal-cookie'
+// import {initUser} from './user'
 
 import { history } from '..'
 
@@ -77,6 +78,7 @@ export function signIn() {
       .then((res) => res.json())
       .then((data) => {
         dispatch({ type: LOGIN, token: data.token, user: data.user })
+        // dispatch(initUser(data.user))
         history.push('/private')
       })
   }

@@ -1,4 +1,3 @@
-// import { usersChannel } from './UsersInChannel'
 
 const CURRENT_CHANNEL = 'CURRENT_CHANNEL'
 const USERS = 'USERS'
@@ -22,13 +21,8 @@ export default (state = initialState, action) => {
   }
 }
 
-
 export function usersInChannel() {
   return (dispatch) => {
-    // const cannelStore  = getState().channel
-    // const arrUsers = cannelStore.currentChannel.usersId
-    // console.log('store channel users', arrUsers)
-
     fetch('/api/v1/userschannel', {
       method: 'POST',
       headers: {
@@ -38,38 +32,30 @@ export function usersInChannel() {
         arrUsers
       })
     })
-      .then((res) => {
-        console.log(res.ok, res)
-        if (!res.ok) throw res
-        return res.json()
-      })
+      .then((res) => res.json())
       .then((data) => {
         dispatch({ type: USERS, users: data })
-        console.log('usersList channel store', data)
       })
-      .catch((error) => {
-        console.log(error)
-        alert('Error: User ')
-      })
+      // .catch((error) => {
+      //   console.log(error)
+      //   alert('Error: User ')
+      // })
   }
 }
 
 export function currentChannels(name) {
+  console.log('0000000', name)
   const channelName = name
   return (dispatch) => {
     fetch(`/api/v1/channel/${channelName}`)
-      .then((res) => res.json())
+      .then((res) => {
+        // res.text().then((s) => console.log('Received rsponse',s))
+        return res.json()
+      })
       .then((data) => {
         dispatch({ type: CURRENT_CHANNEL, currentChannel: data })
         arrUsers = data.usersId
         dispatch(usersInChannel())
-
       })
   }
-
 }
-
-
-// export function updateCurrentChannel(currentChannel) {
-//   return { type: CURRENT_CHANNEL, currentChannel }
-// }

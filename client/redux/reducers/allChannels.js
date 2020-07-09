@@ -1,4 +1,4 @@
-const INIT_USER_CHANNELS = 'INIT_USER_CHANNELS'
+const ALL_CHANNELS = 'ALL_CHANNELS'
 
 
 const initialState = []
@@ -8,7 +8,7 @@ export default (state = initialState, action) => {
     // case ADD_CHANNEL: {
 
     // }
-    case INIT_USER_CHANNELS: {
+    case ALL_CHANNELS: {
       return action.channels
     }
     default:
@@ -16,12 +16,12 @@ export default (state = initialState, action) => {
   }
 }
 
-export function initUserChannels() {
+export function allChannels() {
   return (dispatch) => {
     fetch('/api/v1/channels')
       .then((res) => res.json())
       .then((data) => {
-        dispatch({ type: INIT_USER_CHANNELS, channels: data })
+        dispatch({ type: ALL_CHANNELS, data })
       })
   }
 }

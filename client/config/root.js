@@ -80,9 +80,10 @@ const RootComponent = (props) => {
             <OnlyAnonymousRoute exact path="/registration" component={() => <Registration />} />
             <Route exact path="/" component={() => <Home />} />
             <Route exact path="/dashboard" component={() => <DummyView />} />
-            <PrivateRoute exact path="/private/*" component={() => <PrivateComponent />} />
+
             <PrivateRoute exact path="/private" component={() => <PrivateComponent />} />
             <PrivateRoute exact path="/private/:channel" component={() => <PrivateComponent />} />
+            <PrivateRoute exact path="/private/*" component={() => <PrivateComponent />} />
 
             <Route component={() => <NotFound />} />
           </Switch>
