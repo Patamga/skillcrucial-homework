@@ -1,7 +1,5 @@
 import React from 'react'
 
-
-
 const AddMessage = () => {
   return (
     <div className="flex m-6 rounded-lg border-2 border-gray-600 overflow-hidden bg-gray-100">

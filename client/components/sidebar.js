@@ -1,16 +1,15 @@
 import React from 'react'
-
 import { useSelector } from 'react-redux'
 import { history } from '../redux'
 import ChanelList from './channelList'
-import UsersList from './usersList'
+import UsersList from './list'
 
 const Sidebar = () => {
-
   const currentUser = useSelector((store) => store.auth.user)
+  const currentChannel = useSelector((store) => store.channel)
   const userId = currentUser._id
-  console.log('eeeeee', userId)
 
+  console.log('sitebar channel', currentChannel)
 
   return (
     <div className="bg-blue-800 text-blue-300 w-2/5  hidden md:block">
@@ -28,7 +27,6 @@ const Sidebar = () => {
           </g>
         </svg>
       </div>
-
       <div className=" relative px-4 mb-2 font-sans flex ">
         <span className="text-l text-blue-200 p-2 pr-5 mt-2 flex">Channels</span>
         <button
@@ -40,10 +38,6 @@ const Sidebar = () => {
         </button>
       </div>
       <ChanelList userId={userId} />
-      <div className="bg-teal-600 mb-6 py-1 px-4 text-white font-semi-bold">
-        <span className="pr-1 text-gray-400">#</span> general
-      </div>
-
       <div className="px-4 mb-3 font-sans">Direct Messages</div>
       <UsersList />
 
@@ -63,7 +57,6 @@ const Sidebar = () => {
         <span className="border rounded-full block w-2 h-2 mr-2"> </span>
         <span className="text-blue-100">killgt</span>
       </div> */}
-
       <div className="px-4 mb-3 font-sans">Tags</div>
     </div>
   )

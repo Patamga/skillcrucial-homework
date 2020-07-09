@@ -67,6 +67,22 @@ server.get('/api/v1/users', async (req, res) => {
     res.end()
   })
 })
+server.post('/api/v1/userschannel', async (req, res) => {
+  const userIds = req.body.arrUsers
+  await User.find(
+    {
+      _id: { $in: userIds }
+    },
+    (err, users) => {
+      if (!err) {
+        res.send(users)
+      } else {
+        res.send(err)
+      }
+      res.end()
+    }
+  )
+})
 
 server.get('/api/v1/channels', async (req, res) => {
   await Channel.find({}, (err, channels) => {
@@ -112,6 +128,32 @@ server.get('/api/v1/channels/:userid', async (req, res) => {
       res.end()
     })
 })
+
+server.get('/api/v1/channel/:name', async (req, res) => {
+  const name = req.params.name
+  Channel.findOne({ channelName: name }, (err, channel) => {
+    if (!err) {
+      res.send(channel)
+    } else {
+      res.send(err)
+    }
+    res.end()
+  })
+})
+
+// server.get('/api/v1/user/:id', async (req, res) => {
+//   const channelid = req.params.id
+//   Channel.find({ usersId: channelid }, (err, users) => {
+//     if (!err) {
+//       res.send(users)
+//     } else {
+//       res.send(err)
+//     }
+//     res.end()
+//   })
+// })
+
+
 
 server.post('/api/v1/add_channel', async (req, res) => {
   // надо удалить результат поиска

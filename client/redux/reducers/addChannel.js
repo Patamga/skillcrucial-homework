@@ -1,4 +1,5 @@
 import { history } from '..'
+import { currentChannels } from './channel'
 
 const CREATE_CHANNEL_NAME = 'CREATE_CHANNEL_NAME'
 const CHANNEL = 'CHANNEL'
@@ -49,6 +50,7 @@ export function createChannel(id) {
         console.log('data', data)
         dispatch({ type: CHANNEL, channelName: data.channelName, userId: data._id })
         history.push(`/private/${channelName}`)
+        dispatch(currentChannels(data.channelName))
       })
       .catch((error) => {
         console.log(error)
@@ -56,3 +58,5 @@ export function createChannel(id) {
       })
   }
 }
+
+

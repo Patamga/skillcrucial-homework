@@ -5,12 +5,10 @@ const initialState = []
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    // case ADD_CHANNEL: {
-
-    // }
     case INIT_USER_CHANNELS: {
       return action.channels
     }
+
     default:
       return state
   }
@@ -22,9 +20,8 @@ export function initUserChannels(id) {
     fetch(`/api/v1/channels/${userid}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log('data', data)
+        console.log('data cannelLict', data)
         dispatch({ type: INIT_USER_CHANNELS, channels: data })
       })
   }
 }
-

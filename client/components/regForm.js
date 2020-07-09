@@ -63,7 +63,6 @@ const RegistrationForm = () => {
             />
             {/* <p className="text-red-500 text-xs italic">Please choose a password.</p> */}
           </div>
-
           <div className="flex items-center justify-between">
             <button
               className="bg-pink-700 hover:bg-pink-900 text-white font-bold py-2 px-4 rounded w-full focus:outline-none focus:shadow-outline"

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { updateLoginField, updatePasswordField, signIn } from '../redux/reducers/auth'
 
-
 const LoginForm = () => {
   const dispatch = useDispatch()
   const login = useSelector((s) => s.auth.login)

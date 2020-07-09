@@ -2,11 +2,11 @@ import React from 'react'
 
 // import wave from '../assets/images/wave.jpg'
 
-const TopBar = () => {
+const TopBar = (props) => {
   return (
     <div className="border-b  border-gray-400 flex px-6 py-2 items-center bg-gray-200">
       <div className="flex flex-col">
-        <h3 className="text-gray-900 text-md mb-1 font-extrabold">#general</h3>
+        <h3 className="text-gray-900 text-md mb-1 font-extrabold"># {props.name}</h3>
         <div className="text-gray-600 font-thin text-sm">
           Chit-chattin about ugly HTML and mixing of concerns.
         </div>

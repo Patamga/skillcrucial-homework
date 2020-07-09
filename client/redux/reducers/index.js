@@ -5,6 +5,8 @@ import channelList from './channelList'
 import registration from './registration'
 import users from './users'
 import addChannel from './addChannel'
+import channel from './channel'
+// import UsersInChannel from './UsersInChannel'
 
 const createRootReducer = (history) =>
   combineReducers({
@@ -13,7 +15,9 @@ const createRootReducer = (history) =>
     channelList,
     registration,
     users,
-    addChannel
+    addChannel,
+    channel,
+    // UsersInChannel
   })
 
 export default createRootReducer

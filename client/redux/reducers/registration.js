@@ -90,7 +90,8 @@ export function create() {
       .then((data) => {
         dispatch({ type: LOGIN, token: data.token, user: data.user })
         history.push('/private')
-      }).catch(error => {
+      })
+      .catch(error => {
         console.log(error)
         alert('Error: User already exists')
       })
