@@ -29,7 +29,7 @@ const Sidebar = () => {
         <button
           type="button"
           className="absolute top-0 right-0 h-10 w-10 mr-2 mt-2 text-2xl text-blue-200 hover:bg-blue-900 font-bold rounded"
-          onClick={() => history.push('/private/create_channel')}
+          onClick={() => history.push('/private/create')}
         >
           +
         </button>

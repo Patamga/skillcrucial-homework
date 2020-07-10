@@ -5,7 +5,7 @@ import { initUserChannels } from '../redux/reducers/channelList'
 import { currentChannels } from '../redux/reducers/channel'
 // import { history } from '../redux'
 
-const ChannelList = (props) => {
+const AllChannels = (props) => {
   const channels = useSelector((store) => store.channelList)
   const dispatch = useDispatch()
 
@@ -15,6 +15,7 @@ const ChannelList = (props) => {
 
   return (
     <div>
+      ALL CHANNENLS
       {channels.map((item) => {
         const channel = item.channelName
         console.log(item)
@@ -31,6 +32,6 @@ const ChannelList = (props) => {
   )
 }
 
-ChannelList.propTypes = {}
+AllChannels.propTypes = {}
 
-export default ChannelList
+export default AllChannels

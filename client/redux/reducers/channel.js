@@ -44,7 +44,6 @@ export function usersInChannel() {
 }
 
 export function currentChannels(name) {
-  console.log('0000000', name)
   const channelName = name
   return (dispatch) => {
     fetch(`/api/v1/channel/${channelName}`)

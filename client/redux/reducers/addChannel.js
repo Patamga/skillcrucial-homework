@@ -31,6 +31,9 @@ export function createChannel(id) {
   const userId = id
   return (dispatch, getState) => {
     const { channelName } = getState().addChannel
+    console.log( 'create 1', JSON.stringify({
+        channelName,
+        userId}) )
     fetch('/api/v1/add_channel', {
       method: 'POST',
       headers: {
@@ -39,10 +42,12 @@ export function createChannel(id) {
       body: JSON.stringify({
         channelName,
         userId
+
       })
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log('create2 data', data)
         dispatch({ type: CHANNEL, channelName: data.channelName, userId: data._id })
         history.push(`/private/${channelName}`)
         dispatch(currentChannels(data.channelName))

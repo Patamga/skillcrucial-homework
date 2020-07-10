@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { initUserChannels } from '../redux/reducers/channelList'
 import { currentChannels } from '../redux/reducers/channel'
@@ -7,14 +7,19 @@ import { currentChannels } from '../redux/reducers/channel'
 
 const ChannelList = (props) => {
   const channels = useSelector((store) => store.channelList)
-  const currentChannel = useSelector((store) => store.channel.currentChannel)
+  const id = props.userId
+
+  // const currentChannel = useSelector((store) => store.channel.currentChannel)
 
 
   const dispatch = useDispatch()
+  const { channelOfUrl }  = useParams()
+  console.log('name', channelOfUrl)
+
 
   useEffect(() => {
-    dispatch(initUserChannels(props.userId))
-  }, [props.userId])
+    dispatch(initUserChannels(id))
+  }, [])
   // useEffect(() => {
   //   dispatch(currentChannels(channel))
   // }, [ channelUrl])
@@ -23,19 +28,19 @@ const ChannelList = (props) => {
     <div>
       {channels.map((item) => {
           const channel = item.channelName
-            if (channel === currentChannel.channelName) {
-            return (
-              <div
-                key={item.channelName}
-                className="bg-teal-600 px-4 pb-1 pt-1  mb-2 text-white font-semi-bold "
-              >
-                <Link to={`/private/${channel}`}>
-                  <span className="pr-1 text-gray-400">#</span>
-                  {channel}
-                </Link>
-              </div>
-            )
-          }
+            if (channel === channelOfUrl) {
+              return (
+                <div
+                  key={item.channelName}
+                  className="bg-teal-600 px-4 pb-1 pt-1  mb-2 text-white font-semi-bold "
+                >
+                  <Link to={`/private/${channel}`}>
+                    <span className="pr-1 text-gray-400">#</span>
+                    {channel}
+                  </Link>
+                </div>
+              )
+            }
             return (
               <div key={item.channelName} className="px-4 mb-2 pb-1 pt-1 text-white font-semi-bold ">
                 <Link to={`/private/${channel}`} onClick={() => dispatch(currentChannels(channel))}>
