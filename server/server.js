@@ -5,20 +5,20 @@ import bodyParser from 'body-parser'
 import sockjs from 'sockjs'
 import { renderToStaticNodeStream } from 'react-dom/server'
 import React from 'react'
+
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
-import jwt from 'jsonwebtoken'
 import mongooseService from './services/mongoose'
 import passportJWT from './services/passport'
 import auth from './middleware/auth'
-
-import config from './config'
-import Html from '../client/html'
+import jwt from 'jsonwebtoken'
 import User from './model/User.model'
 import Channel from './model/Channel.model'
+import Message from './model/Channel.model'
+import config from './config'
+import Html from '../client/html'
 
 const Root = () => ''
-
 mongooseService.connect()
 
 try {
@@ -48,135 +48,14 @@ const middleware = [
   bodyParser.json({ limit: '50mb', extended: true }),
   cookieParser()
 ]
-  passport.use('jwt', passportJWT.jwt);
+
+passport.use('jwt', passportJWT)
 
 middleware.forEach((it) => server.use(it))
 
-// server.get('/api/v1/user-info', auth(['admin']), (req, res) => {
-//   res.json({ status: '123' })
-// })
-
-server.get('/api/v1/users', async (req, res) => {
-  await User.find({}, (err, users) => {
-    console.log('users', users)
-    if (!err) {
-      res.send(users)
-    } else {
-      res.send(err)
-    }
-    res.end()
-  })
+server.get('/api/v1/user-info', auth(['admin']), (req, res) => {
+  res.json({ status: '200' })
 })
-server.post('/api/v1/userschannel', async (req, res) => {
-  const userIds = req.body.arrUsers
-  await User.find(
-    {
-      _id: { $in: userIds }
-    },
-    (err, users) => {
-      if (!err) {
-        res.send(users)
-      } else {
-        res.send(err)
-      }
-      res.end()
-    }
-  )
-})
-
-server.get('/api/v1/channels', async (req, res) => {
-  // await Channel.find({}, (err, channels) => {
-  await Channel.find({}, 'channelName usersId', (err, channels) => {
-    console.log('Channels', channels)
-    if (!err) {
-      res.send(channels)
-    } else {
-      res.send(err)
-    }
-  res.end()
-  })
-})
-
-server.post('/api/v1/channels', async (req, res) => {
-  const channel = new Channel({
-    channelName: req.body.channelName,
-    usersId: req.body.userId,
-    messages: req.body.messages
-  })
-  channel.save((err) => {
-    if (!err) {
-      Channel.find({}, (err, channels) => {
-        if (!err) {
-          res.send(channels)
-        } else {
-          res.send(err)
-        }
-        res.end()
-      })
-    }
-  })
-})
-
-server.get('/api/v1/channels/:userid', async (req, res) => {
-  const userid = req.params.userid
-    Channel.find({ usersId: userid }, (err, channels) => {
-      if (!err) {
-        res.send(channels)
-      } else {
-        res.send(err)
-      }
-      res.end()
-    })
-})
-
-server.get('/api/v1/channel/:name', async (req, res) => {
-  const name = req.params.name
-  Channel.findOne({ channelName: name }, (err, channel) => {
-    if (!err) {
-      res.send(JSON.stringify(channel))
-    } else {
-      res.send(err)
-    }
-    res.end()
-  })
-})
-
-// server.get('/api/v1/user/:id', async (req, res) => {
-//   const channelid = req.params.id
-//   Channel.find({ usersId: channelid }, (err, users) => {
-//     if (!err) {
-//       res.send(users)
-//     } else {
-//       res.send(err)
-//     }
-//     res.end()
-//   })
-// })
-
-
-
-server.post('/api/v1/add_channel', async (req, res) => {
-  // надо удалить результат поиска
-  const userid = req.body.userId
-  const channel = new Channel({
-    channelName: req.body.channelName,
-    usersId: req.body.userId,
-    messages: req.body.messages
-  })
-  channel.save((err) => {
-    if (!err) {
-      Channel.find({ usersId: userid }, (err, channels) => {
-        if (!err) {
-          res.send(channels)
-        } else {
-          res.send(err)
-        }
-        res.end()
-      })
-    }
-  })
-})
-
 
 server.get('/api/v1/auth', async (req, res) => {
   try {
@@ -195,9 +74,10 @@ server.get('/api/v1/auth', async (req, res) => {
 })
 
 server.post('/api/v1/auth', async (req, res) => {
-  // console.log(req.body)
+  console.log(req.body)
   try {
     const user = await User.findAndValidateUser(req.body)
+
     const payload = { uid: user.id }
     const token = jwt.sign(payload, config.secret, { expiresIn: '48h' })
     delete user.password
@@ -209,20 +89,117 @@ server.post('/api/v1/auth', async (req, res) => {
   }
 })
 
-server.post('/api/v1/registration', async (req, res) => {
-  // console.log(req.body)
+server.post('/api/v1/reg', async (req, res) => {
   try {
     const user = await User.createAccount(req.body)
-    console.log('uerId', user.id)
     const payload = { uid: user.id }
     const token = jwt.sign(payload, config.secret, { expiresIn: '48h' })
     delete user.password
     res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 48 })
     res.json({ status: 'ok', token, user })
   } catch (err) {
+    console.log(err)
     res.status(400).json('Error')
   }
 })
+
+server.post('/api/v1/add_channel', async (req, res) => {
+  console.log('Request',req.body)
+  const channel = new Channel({
+    channelName: req.body.channelName,
+    usersId: req.body.userId
+  })
+  console.log('server')
+  channel.save((err) => {
+    if (!err) {
+      Channel.findOne({ channelName: req.body.channelName }, (err, channel) => {
+        if (!err) {
+          res.send(channel)
+        } else {
+          res.send(err)
+        }
+        res.end()
+      })
+    }
+  })
+})
+
+server.get('/api/v1/channel/:name', async (req, res) => {
+  const name = req.params.name
+  Channel.findOne({ channelName: name }, (err, channel) => {
+    if (!err) {
+      res.send(channel)
+    } else {
+      res.send(err)
+    }
+    res.end()
+  })
+})
+
+server.get('/api/v1/userchannels/:userid', async (req, res) => {
+  const userid = req.params.userid
+  await Channel.find({ usersId: userid }, 'channelName', (err, channels) => {
+    if (!err) {
+      res.send(channels)
+    } else {
+      res.send(err)
+    }
+    res.end()
+  })
+})
+
+server.post('/api/v1/users-in-channel', async (req, res) => {
+  const userIds = req.body.arrUsers
+  await User.find(
+    {
+      _id: { $in: userIds }
+    },
+    (err, users) => {
+      if (!err) {
+        res.send(users)
+      } else {
+        res.send(err)
+      }
+      res.end()
+    }
+  )
+})
+
+server.post('/api/v1/add_message', async (req, res) => {
+  await Channel.findByIdAndUpdate(
+    { _id: req.body._id },
+    { $addToSet: { messages: { userId: req.body.userId, text: req.body.text } } },
+    { upsert: false, new: true },
+    (err, channel) => {
+      if (!err) {
+        res.send(channel)
+      } else {
+        res.send(err)
+      }
+      res.end()
+    }
+  )
+
+})
+
+server.post('/api/v1/user', async (req, res) => {
+  const userId = req.body.userId
+  await User.findOne(
+    {
+      _id: { $in: userIds }
+    },
+    (err, users) => {
+      if (!err) {
+        res.send(users)
+      } else {
+        res.send(err)
+      }
+      res.end()
+    }
+  )
+})
+
+
 
 server.use('/api/', (req, res) => {
   res.status(404)
@@ -231,7 +208,7 @@ server.use('/api/', (req, res) => {
 
 const [htmlStart, htmlEnd] = Html({
   body: 'separator',
-  title: 'Skillcrucial - Become an IT HERO'
+  title: 'Become an IT HERO'
 }).split('separator')
 
 server.get('/', (req, res) => {

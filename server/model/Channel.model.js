@@ -2,18 +2,19 @@ import mongoose from 'mongoose'
 
 const MessageSchema = new mongoose.Schema(
   {
-    userId: String,
-    text: String,
+    userId:  String ,
+    text: String ,
     time: {
       type: Date,
       default: new Date()
     },
-    meta : {
+    meta: {
       type: Object,
       default: {}
     }
   },
   {
+    _id: false,
     timestamp: true
   }
 )
@@ -23,45 +24,14 @@ const channelSchema = new mongoose.Schema(
     channelName: {
       type: String,
       required: true,
-      unique: true,
+      unique: true
     },
-    usersId: {
-      type: [String]
-    },
-    messages: {
-      type: [MessageSchema]
-    }
+    usersId: [String],
+    messages: [MessageSchema]
   },
   {
     timestamp: true
   }
 )
 
-channelSchema.pre('save', async function (next) {
-  return next()
-})
-
-// channelSchema.statics = {
-//   async findAndValidateUser({ email, password }) {
-//     if (!email) {
-//       throw new Error('No Email')
-//     }
-//     if (!password) {
-//       throw new Error('No Password')
-//     }
-
-//     const user = await this.findOne({ email }).exec()
-//     if (!user) {
-//       throw new Error('No User')
-//     }
-
-//     const isPasswordOk = await user.passwordMatches(password)
-
-//     if (!isPasswordOk) {
-//       throw new Error('PasswordIncorrect')
-//     }
-
-//     return user
-//   }
-// }
-export default mongoose.model('channels', channelSchema)
+export default mongoose.model('channel', channelSchema)

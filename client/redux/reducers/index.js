@@ -1,25 +1,17 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
-import auth from './auth'
-import channelList from './channelList'
+import authentication from './authentication'
 import registration from './registration'
-import users from './users'
-import addChannel from './addChannel'
 import channel from './channel'
 import user from './user'
-// import UsersInChannel from './UsersInChannel'
 
 const createRootReducer = (history) =>
   combineReducers({
     router: connectRouter(history),
-    auth,
-    channelList,
+    authentication,
     registration,
-    users,
-    addChannel,
     channel,
     user
-    // UsersInChannel
   })
 
 export default createRootReducer

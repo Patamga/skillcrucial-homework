@@ -31,15 +31,13 @@ userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     return next()
   }
-
   this.password = bcrypt.hashSync(this.password)
-
   return next()
 })
 
 userSchema.method({
   passwordMatches(password) {
-    // console.log(bcrypt.hashSync(password), this.password)
+    console.log(bcrypt.hashSync(password), this.password)
     return bcrypt.compareSync(password, this.password)
   }
 })
@@ -67,7 +65,6 @@ userSchema.statics = {
     if (!email) {
       throw new Error('Email ')
     }
-
     const user = await this.findOne({ email }).exec()
     if (user) {
       throw Error('Already exists')
@@ -87,28 +84,4 @@ userSchema.statics = {
   }
 }
 
-// userSchema.statics = {
-//   async createAccount({ email, username, password }) {
-//     if (!email) {
-//       throw new Error('Email ')
-//     }
-
-//     const user = await this.findOne({ email }).exec()
-//     if (user) {
-//       throw Error('Already exists')
-//     }
-//     let newUser = new this({
-//       username,
-//       email,
-//       password
-//     })
-//     await newUser.save( (err, savedUser) => {
-//       if (err) {
-//         throw Error('Save error')
-//       }
-//       newUser = savedUser
-//     })
-//     return newUser
-//   }
-// }
 export default mongoose.model('users', userSchema)

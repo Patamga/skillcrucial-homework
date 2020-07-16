@@ -1,26 +1,23 @@
 import React from 'react'
-// import { Switch, Route } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+
+// import { useSelector } from 'react-redux'
 // import MessagesList from './messagesList'
-// import MessagesList from './testo'
-// import CreateChannel from './channelForm'
+
 import TopBar from './topBar'
 import AddMessage from './addMessage'
-// import AllChannel from './allChannels'
+import MessageList from './messageList'
 
 const ChatContent = () => {
+  // const channel = useSelector((s) => s.channel.channel)
 
-  // const currentUserId = useSelector((store) => store.auth.user)
-  const channel = useSelector((s) => s.channel.currentChannel)
-  const name = channel.channelName
-  const messag = channel.messages
-  console.log('channel.messages', messag)
-  // const userId = currentUserId._id
+  // const messag = channel.messages
+  // console.log('channel.messages', channel)
+
   return (
     <div>
-      <TopBar name={name} />
+      <TopBar />
       <div className="px-6 py-4 flex-1 overflow-scroll-x">
-        {' '}
+        <MessageList />{' '}
       </div>
       <AddMessage />
     </div>

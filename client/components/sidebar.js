@@ -1,15 +1,17 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+
 import { history } from '../redux'
 import ChanelList from './channelList'
-import UsersList from './listUsers'
+import UsersList from './userList'
 
 const Sidebar = () => {
-  const currentUser = useSelector((store) => store.auth.user)
-  const userId = currentUser._id
+  const currentUser = useSelector((store) => store.authentication.user)
+  // const userId = currentUser._id
+  // console.log(currentUser.role)
 
   return (
-    <div className="bg-blue-800 text-blue-300 w-2/5  hidden md:block">
+    <div className="bg-blue-800 text-blue-300 w-2/5  hidden sm:block">
       <div className="relative bg-blue-900 flex items-center pb-6  pr-2 px-4 pt-3 border-b border-blue-800">
         <span className="bg-green-500 rounded-full block w-2 h-2 mr-2"> </span>
         <span className="text-blue-100 font-semibold flex ">{currentUser.username}</span>
@@ -34,26 +36,9 @@ const Sidebar = () => {
           +
         </button>
       </div>
-      <ChanelList userId={userId} />
+      <ChanelList />
       <div className="px-4 mb-3 font-sans">Direct Messages</div>
       <UsersList />
-
-      {/* <div className="flex items-center mb-3 px-4">
-        <span className="bg-green-500 rounded-full block w-2 h-2 mr-2"> </span>
-        <span className="text-blue-100">
-          Olivia Dunham <i className="text-gray-500 text-sm">(me)</i>
-        </span>
-      </div>
-
-      <div className="flex items-center mb-3 px-4">
-        <span className="bg-green-500 rounded-full block w-2 h-2 mr-2"> </span>
-        <span className="text-blue-100">Adam Bishop</span>
-      </div>
-
-      <div className="flex items-center px-4 mb-6">
-        <span className="border rounded-full block w-2 h-2 mr-2"> </span>
-        <span className="text-blue-100">killgt</span>
-      </div> */}
       <div className="px-4 mb-3 font-sans">Tags</div>
     </div>
   )

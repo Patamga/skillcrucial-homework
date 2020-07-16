@@ -1,12 +1,13 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { updateLoginField, updatePasswordField, signIn } from '../redux/reducers/auth'
+import { updateLoginField, updatePasswordField, signIn } from '../redux/reducers/authentication'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
-  const login = useSelector((s) => s.auth.login)
-  const password = useSelector((s) => s.auth.password)
+  const login = useSelector((store) => store.authentication.email)
+  const password = useSelector((store) => store.authentication.password)
+
   return (
     <div className="w-screen h-screen bg-gray-100 flex justify-center items-center ">
       <div className="w-full max-w-xs">

@@ -57,21 +57,12 @@ export function updatePasswordField(password) {
 //   }
 // }
 
-// export function tryGetUserInfo() {
-//   return () => {
-//     fetch('/api/v1/user-info')
-//       .then((res) => res.json())
-//       .then((data) => {
-//         console.log(data)
-//       })
-//   }
-// }
 
 export function create() {
   return (dispatch, getState) => {
     const { email, password, username } = getState().registration
 
-    fetch('/api/v1/registration', {
+    fetch('/api/v1/reg', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -91,7 +82,7 @@ export function create() {
         dispatch({ type: LOGIN, token: data.token, user: data.user })
         history.push('/private')
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error)
         alert('Error: User already exists')
       })

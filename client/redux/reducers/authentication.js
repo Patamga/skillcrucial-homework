@@ -1,6 +1,4 @@
 import Cookies from 'universal-cookie'
-// import {initUser} from './user'
-
 import { history } from '..'
 
 const UPDATE_LOGIN = 'UPDATE_LOGIN'
@@ -20,17 +18,16 @@ export default (state = initialState, action) => {
     case UPDATE_LOGIN: {
       return { ...state, email: action.email }
     }
-
-    case LOGIN: {
-      return { ...state, token: action.token, password: '', user: action.user }
-    }
-
     case UPDATE_PASSWORD: {
       return { ...state, password: action.password }
+    }
+    case LOGIN: {
+      return { ...state, token: action.token, password: '', user: action.user }
     }
     default:
       return state
   }
+
 }
 
 export function updateLoginField(email) {
@@ -52,19 +49,22 @@ export function trySignIn() {
   }
 }
 
-// export function tryGetUserInfo() {
-//   return () => {
-//     fetch('/api/v1/user-info')
-//       .then((res) => res.json())
-//       .then((data) => {
-//         console.log(data)
-//       })
-//   }
-// }
+export function tryGetUserInfo() {
+  return () => {
+    fetch('/api/v1/user-info')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data reducer', data)
+        // if (data.status === '200') {
+        //   history.push('/private/admin')
+        // }
+      })
+  }
+}
 
 export function signIn() {
   return (dispatch, getState) => {
-    const { email, password } = getState().auth
+    const { email, password } = getState().authentication
     fetch('/api/v1/auth', {
       method: 'POST',
       headers: {
@@ -78,9 +78,7 @@ export function signIn() {
       .then((res) => res.json())
       .then((data) => {
         dispatch({ type: LOGIN, token: data.token, user: data.user })
-        // dispatch(initUser(data.user))
         history.push('/private')
       })
   }
 }
-

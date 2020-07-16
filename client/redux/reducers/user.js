@@ -1,42 +1,25 @@
-const CURRENT_USER = 'CURRENT_USER'
-const INIT_USER_CHANNELS = 'INIT_USER_CHANNELS'
-let userid = ''
-
+const INIT_USER_CHANNELS_LIST = 'INIT_USER_CHANNELS_LIST'
 
 const initialState = {
-  currentUser: {},
-  channels: []
+  channelList: []
 }
-
 export default (state = initialState, action) => {
   switch (action.type) {
-    case CURRENT_USER: {
-      return { ...state, currentUser: action.currentUser }
+    case INIT_USER_CHANNELS_LIST: {
+      return { ...state, channelList: action.channelList }
     }
-    case INIT_USER_CHANNELS: {
-      return { ...state, channels: action.channels }
-    }
-
     default:
       return state
   }
 }
 
-export function initUser () {
-  return (dispatch, getState) => {
-    const p = getState().auth.user
-    dispatch({ type: CURRENT_USER, currentUser: p })
-    userid = p._id
-  }
-}
-
-export function initUserChannels() {
-  return (dispatch ) => {
-    fetch(`/api/v1/channels/${userid}`)
+export function addChannelsList(id) {
+  const userid = id
+  return (dispatch) => {
+    fetch(`/api/v1/userchannels/${userid}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log('data cannelLict', data)
-        dispatch({ type: INIT_USER_CHANNELS, channels: data })
+        dispatch({ type: INIT_USER_CHANNELS_LIST, channelList: data })
       })
   }
 }

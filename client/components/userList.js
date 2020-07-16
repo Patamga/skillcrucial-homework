@@ -1,33 +1,13 @@
-// import React from 'react'
-// import { useSelector } from 'react-redux'
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React from 'react'
 import { useSelector } from 'react-redux'
-// import { usersInChannel } from '../redux/reducers/channel'
-// import { useSelector } from 'react-redux'
-// import { history } from '../redux'
 
 const UsersList = () => {
-  const[list, setList] = useState()
-  const currentChannel = useSelector((store) => store.channel.currentChannel)
-  console.log('currentChannel', currentChannel)
-  const channelUrl = useParams()
-  const currentUser = useSelector((store) => store.auth.user)
-  const usersList = useSelector((store) => store.channel.users)
-  console.log('users List', usersList)
-
-  // const dispatch = useDispatch()
-
-    useEffect(() => {
-      setList(usersList)
-    }, [channelUrl, currentChannel])
-
-
-  // const channels = useSelector((store) => store.channelList)
+  const userList = useSelector((store) => store.channel.users)
+  const currentUser = useSelector((store) => store.authentication.user)
 
   return (
     <div>
-      { list.map((item) => {
+      {userList.map((item) => {
         const user = item.username
         if (user === currentUser.username) {
           return (
