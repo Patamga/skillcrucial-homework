@@ -3,35 +3,35 @@ import { Link } from 'react-router-dom'
 
 const Dummy = () => {
   return (
-    <div className=" flex flex-col  h-screen w-screen">
-      <div className="flex flex-grow flex-row bg-red-500 items-center justify-center">
-        <div className=" w-1/4 flex-grow text-center ">
-          <Link className="p-2 text-blue-700" to="/">
+    <div className="flex-container column">
+      <div className="task-3 red">
+        <div>
+          <Link className="link" to="/">
             back
           </Link>
           1
         </div>
-        <div className=" w-1/4 flex-grow text-center"> 2</div>
-        <div className=" w-1/4 flex-grow text-center"> 3</div>
-        <div className=" w-1/4 flex-grow text-center"> 4</div>
+        <div> 2</div>
+        <div> 3</div>
+        <div> 4</div>
       </div>
-      <div className=" flex flex-grow flex-row items-center justify-center bg-green-500 ">
-        <div className="w-1/4 flex-grow text-center "> 5</div>
-        <div className="w-1/4 flex-grow text-center"> 6</div>
-        <div className="w-1/4 flex-grow text-center"> 7</div>
-        <div className="w-1/4 flex-grow text-center"> 8</div>
+      <div className="task-3 green ">
+        <div> 5</div>
+        <div> 6</div>
+        <div> 7</div>
+        <div> 8</div>
       </div>
-      <div className=" flex flex-grow flex-row items-center justify-center bg-yellow-500 ">
-        <div className="w-1/4 flex-grow text-center "> 9</div>
-        <div className="w-1/4 flex-grow text-center"> 10</div>
-        <div className="w-1/4 flex-grow text-center"> 11</div>
-        <div className="w-1/4 flex-grow text-center"> 12</div>
+      <div className="task-3 yellow ">
+        <div> 9</div>
+        <div> 10</div>
+        <div> 11</div>
+        <div> 12</div>
       </div>
-      <div className=" flex flex-grow flex-row items-center justify-center bg-blue-500 ">
-        <div className="w-1/4 flex-grow text-center "> 13</div>
-        <div className="w-1/4 flex-grow text-center"> 14</div>
-        <div className="w-1/4 flex-grow text-center"> 15</div>
-        <div className="w-1/4 flex-grow text-center"> 16</div>
+      <div className="task-3 blue ">
+        <div> 13</div>
+        <div> 14</div>
+        <div> 15</div>
+        <div> 16</div>
       </div>
     </div>
   )

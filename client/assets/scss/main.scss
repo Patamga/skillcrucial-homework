@@ -5,6 +5,183 @@
 
 @tailwind utilities;
 
+$red: #f56565;
+$gray: #a0aec0;
+$yellow: #ecc94b;
+$green: #48bb78;
+$blue: #4299e1;
+$white: #ffffff;
+
+
+
+@mixin flex-3 {
+  display: flex;
+  width: 33.333333%;
+}
+@mixin flex-3-row {
+  display: flex;
+  height: 33.333333%;
+}
+@mixin flex-4-column {
+  display: flex;
+  width: 25%;
+}
+@mixin center {
+  justify-content: center;
+  align-items: center;
+}
+@mixin flex-4-row {
+  display: flex;
+  height: 25%;
+}
+.red {
+  background-color: $red;
+}
+.yellow {
+  background: $yellow;
+}
+.green {
+  background-color: $green;
+}
+.blue {
+  background-color: $blue;
+}
+.link {
+  background-color: $white;
+  padding: 2px;
+  color: $blue;
+  width: 50px;
+  height: 25px;
+}
+.flex-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+.container {
+  height: 100vh;
+  width: 100vw;
+}
+.center {
+  justify-content: center;
+  align-items: center;
+}
+.column {
+  flex-direction: column;
+}
+.row {
+  flex-direction: row;
+}
+.flex-3 {
+  display: flex;
+  width: 33.333333%;
+}
+.flex-4-column {
+  display: flex;
+  width: 25%;
+}
+.flex-4-row {
+  display: flex;
+  height: 25%;
+}
+
+.task-1 {
+  @include flex-3;
+}
+.task-2 {
+  @include flex-4-row;
+}
+.task-3 {
+  @include flex-4-row;
+  @include center;
+}
+.task-3 > div {
+  @include flex-4-column;
+  @include center;
+}
+.task-4 {
+  @include center;
+  @include flex-4-column;
+  flex-direction: column;
+}
+.task-4 > div {
+  @include flex-4-row;
+  @include center;
+}
+//className="flex w-64 h-64 border border-gray-700 m-1 items-center justify-center
+.task-5 {
+  @include flex-3-row;
+  @include center;
+}
+.task-5 > div {
+  @include flex-3;
+  @include center;
+}
+.task-5 .col1 {
+  width: 100px;
+  border: 1px;
+  border-style: dashed;
+  border-color: $white;
+  margin: 2px;
+}
+.task-5 .col2 {
+  width: 100%;
+  border: 1px;
+  border-style: dashed;
+  border-color: $white;
+  margin: 2px;
+}
+
+.task-6 {
+  display: flex;
+  flex-wrap: wrap;
+}
+.task-6 > div {
+  display: flex;
+  @include center;
+  background-color: $gray;
+  margin: 2%;
+  width: 100px;
+  height: 100px;
+  border: 1px;
+  border-style: solid;
+  border-color: $blue;
+}
+.task-7 {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+.task-8 {
+  display: flex;
+  height: 100px;
+  width: 100px;
+  background-color: black;
+  @include center;
+}
+// "w-64 h-64 border-gray-900 bg-yellow-500 flex flex-col
+.task-9 {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  width: 300px;
+  background-color: $yellow;
+  flex-direction: column;
+}
+.task-9 > div {
+  @include flex-3-row;
+}
+.task-9 > div > div {
+    width: 33.333333%;
+    background-color: $gray;
+}
+
+.row1 {justify-content: flex-start;};
+.row2 {justify-content: center;};
+.row3 {justify-content: flex-end;};
+
+
+
 // * { background-color: rgba(255,0,0,.2); }
 // * * { background-color: rgba(0,255,0,.2); }
 // * * * { background-color: rgba(0,0,255,.2); }

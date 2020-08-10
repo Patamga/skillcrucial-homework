@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 
 const Dummy = () => {
   return (
-    <div className=" h-screen w-screen flex items-center justify-center">
-      <div className="w-64 h-64 bg-gray-900 flex items-center justify-center">
-          <Link className="p-2 text-blue-700" to="/">
-            back
-          </Link>
+    <div className="flex-container center">
+      <div className="task-8">
+        <Link className="link" to="/">
+          back
+        </Link>
       </div>
     </div>
   )

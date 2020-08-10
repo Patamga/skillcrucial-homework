@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom'
 
 const Dummy = () => {
   return (
-    <div className=" flex  h-screen w-screen">
-      <div className=" flex-grow bg-red-500 ">
-        <Link className="pl-2 text-blue-700" to="/">
+    <div className="flex-container ">
+      <div className="task-1 red">
+        <Link className="link" to="/">
           back
         </Link>
       </div>
-      <div className=" flex-grow bg-green-500 "> </div>
-      <div className=" flex-grow bg-blue-500 "> </div>
+      <div className="task-1 green "> </div>
+      <div className="task-1 blue"> </div>
     </div>
   )
 }
