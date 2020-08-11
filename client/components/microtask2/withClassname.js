@@ -1,69 +1,49 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import Gist from 'react-gist'
 import classNames from 'classnames'
 
-const Home = () => {
+const Component = () => {
+  const classButtonHeader ='w-full h-64 flex bg-teal-700 hover:bg-teal-800 xl:hover:bg-teal-700 text-white text-3xl font-thin center flex-col border border-gray-400 cursor-pointer xl:cursor-default'
+  const classContentBlock ='w-full flex flex-col h-full border border-gray-400 bg-gray-100 p-5'
+  const [toggle, setToggle] = useState(true)
+  const classUsers = classNames({
+    'flex flex-col': toggle,
+    'hidden sm:hidden md:hidden lg:hidden xl:flex flex-col': !toggle,
+    'flex-col h-screen m-2 w-full h-screen': true
+  })
+  const classCompanies = classNames({
+    'flex flex-col': !toggle,
+    'hidden sm:hidden md:hidden lg:hidden xl:flex flex-col': toggle,
+    'h-screen m-2 w-full h-screen': true
+  })
 
-  const classButtonHeader = 'w-full h-64 flex bg-teal-700 hover:bg-teal-800 xl:hover:bg-teal-700 text-white text-3xl font-thin center flex-col border border-gray-400 cursor-pointer xl:cursor-default'
-  const classContentBlock = 'w-full flex h-full border border-gray-400 bg-gray-100 p-5'
-  const classColumn = classNames()
-  console.log(classColumn)
-
-  const [valueHeader, setValueHeader] = useState('')
-  const classVisibleOrHidden = {
-    visibility: 'm-2 w-full h-screen w-auto flex flex-col ',
-    hidden: 'm-2 w-full hidden sm:hidden md:hidden lg:hidden xl:flex flex-col h-screen  '
-  }
-
-  const [classColumn1, setCol1] = useState(classVisibleOrHidden.hdden)
-  const [classColumn2, setCol2] = useState(classVisibleOrHidden.visibility)
-
-  const changeValueHeader = (e) => {
-    const selectedValue = e.target.value
-    setValueHeader(selectedValue)
-  }
-
-  useEffect(() => {
-    if (classColumn1 === classVisibleOrHidden.visibility) {
-      setCol1(classVisibleOrHidden.hidden)
-    } else {
-      setCol1(classVisibleOrHidden.visibility)
-    }
-    if (classColumn2 === classVisibleOrHidden.visibility) {
-      setCol2(classVisibleOrHidden.hidden)
-    } else {
-      setCol2(classVisibleOrHidden.visibility)
-    }
-  }, [valueHeader])
   return (
     <div>
       <div className="flex flex-row center p-2">
-        <div className={classColumn1}>
-          <button
-            type="button"
-            value="USERS"
-            className={classButtonHeader}
-            onClick={changeValueHeader}
-          >
+        <div className={classUsers}>
+          <button type="button" className={classButtonHeader} onClick={() => setToggle(!toggle)}>
             USERS
           </button>
-          <div className={classContentBlock}>for users</div>
+          <div className={classContentBlock}>
+            <div className="flex"> c модулем Classname</div>
+            <div className="trx w-full ">
+              <Gist id="6c51ba3b6c392b2ef336c2214e13ee11" file="component-with-Classname" />
+            </div>
+          </div>
         </div>
-        <div className={classColumn2}>
-          <button
-            type="button"
-            value="COMPANIES"
-            className={classButtonHeader}
-            onClick={changeValueHeader}
-          >
+        <div className={classCompanies}>
+          <button type="button" className={classButtonHeader} onClick={() => setToggle(!toggle)}>
             COMPANIES
           </button>
-          <div className={classContentBlock}>for companies</div>
+          <div className={classContentBlock}>
+            <div className="flex"> companies content</div>
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-Home.propTypes = {}
+Component.propTypes = {}
 
-export default Home
+export default Component

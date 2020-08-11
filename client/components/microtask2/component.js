@@ -60,7 +60,7 @@ const Component = () => {
             COMPANIES
           </button>
           <div className={classContentBlock}>
-            <div className="flex"> c модулем Classname</div>
+            <div className="flex"> companies content</div>
 
           </div>
         </div>

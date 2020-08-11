@@ -34,6 +34,7 @@ const Dummy = () => {
         <Link className="link" to="/microtask">
           смотреть решение
         </Link>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <Link className="link" to="/withClassname">
           смотреть решение c Classnames
         </Link>
