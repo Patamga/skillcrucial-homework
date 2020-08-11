@@ -32,7 +32,7 @@ const Dummy = () => {
       microtask 2
       <div>
 
-        <Link className="link" to="/microtask22 ">
+        <Link className="link" to="/microtask2 ">
           смотреть решение
         </Link>
 
