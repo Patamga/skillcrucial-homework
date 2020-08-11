@@ -23,7 +23,6 @@
     "watch:server": "nodemon --legacy-watch start.js --watch server --watch client --exec \"npm run lint:server  --scripts-prepend-node-path && node\"",
     "build:prod": "cross-env NODE_ENV=production webpack --config webpack.production.config.js --progress --profile --colors",
     "build:ssr": "cross-env NODE_ENV=production webpack --config webpack.ssr.config.js --progress --profile --colors",
-
     "heroku-postbuild": "yarn run build:prod",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -109,6 +108,7 @@
     "raw-loader": "^4.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-gist": "^1.2.2",
     "react-helmet": "^6.0.0",
     "react-hot-loader": "^4.12.21",
     "react-redux": "^7.2.0",

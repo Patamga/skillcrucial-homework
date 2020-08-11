@@ -8,8 +8,12 @@
 
 @tailwind utilities;
 
-
-
+.trx{
+  height: 100%;
+}
+.trx > iframe {
+  height: 100%!important;
+}
 
 $red: #f56565;
 $gray: #a0aec0;
@@ -170,7 +174,7 @@ $white: #ffffff;
   height: 300px;
   width: 300px;
   background-color: $yellow;
-  flex-direction: column;
+  
 }
 .task-9 > div {
   @include flex-3-row;

@@ -19,6 +19,7 @@ import Dummy7 from '../components/microtasks/7'
 import Dummy8 from '../components/microtasks/8'
 import Dummy9 from '../components/microtasks/9'
 import Microtask from '../components/microtask2/component'
+import MicroWithClassname from '../components/microtask2/withClassname'
 import NotFound from '../components/404'
 
 import Startup from './startup'
@@ -93,6 +94,7 @@ const RootComponent = (props) => {
             <Route exact path="/8" component={() => <Dummy8 />} />
             <Route exact path="/9" component={() => <Dummy9 />} />
             <Route exact path="/microtask" component={() => <Microtask />} />
+            <Route exact path="/withClassname" component={() => <MicroWithClassname />} />
             <Route exact path="/dashboard" component={() => <Home />} />
             <PrivateRoute exact path="/hidden-route" component={() => <DummyView />} />
             <Route component={() => <NotFound />} />

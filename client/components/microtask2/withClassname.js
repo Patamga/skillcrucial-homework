@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import Gist from 'react-gist'
+import classNames from 'classnames'
 
-const Component = () => {
-  const classButtonHeader =
-    'w-full h-64 flex bg-teal-700 hover:bg-teal-800 xl:hover:bg-teal-700 text-white text-3xl font-thin center flex-col border border-gray-400 cursor-pointer xl:cursor-default'
-  const classContentBlock =
-    'w-full flex flex-col h-full border border-gray-400 bg-gray-100 p-5'
+const Home = () => {
+
+  const classButtonHeader = 'w-full h-64 flex bg-teal-700 hover:bg-teal-800 xl:hover:bg-teal-700 text-white text-3xl font-thin center flex-col border border-gray-400 cursor-pointer xl:cursor-default'
+  const classContentBlock = 'w-full flex h-full border border-gray-400 bg-gray-100 p-5'
+  const classColumn = classNames()
+  console.log(classColumn)
+
+  const [valueHeader, setValueHeader] = useState('')
   const classVisibleOrHidden = {
     visibility: 'm-2 w-full h-screen w-auto flex flex-col ',
     hidden: 'm-2 w-full hidden sm:hidden md:hidden lg:hidden xl:flex flex-col h-screen  '
   }
-  const [valueHeader, setValueHeader] = useState('')
+
   const [classColumn1, setCol1] = useState(classVisibleOrHidden.hdden)
   const [classColumn2, setCol2] = useState(classVisibleOrHidden.visibility)
 
@@ -43,12 +46,7 @@ const Component = () => {
           >
             USERS
           </button>
-          <div className={classContentBlock}>
-            <div className="flex"> без модуля Classname</div>
-            <div className="trx w-full ">
-              <Gist id="e299385f2331afd073f519dc2ef3a921" file="component" />
-            </div>
-          </div>
+          <div className={classContentBlock}>for users</div>
         </div>
         <div className={classColumn2}>
           <button
@@ -59,16 +57,13 @@ const Component = () => {
           >
             COMPANIES
           </button>
-          <div className={classContentBlock}>
-            <div className="flex"> c модулем Classname</div>
-
-          </div>
+          <div className={classContentBlock}>for companies</div>
         </div>
       </div>
     </div>
   )
 }
 
-Component.propTypes = {}
+Home.propTypes = {}
 
-export default Component
+export default Home
