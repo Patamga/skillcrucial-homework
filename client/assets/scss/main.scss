@@ -1,9 +1,15 @@
 /* purgecss start ignore */
 @tailwind  base;
 @tailwind  components;
+@import "./microtask2.scss";
+
+
 /* purgecss end ignore */
 
 @tailwind utilities;
+
+
+
 
 $red: #f56565;
 $gray: #a0aec0;
@@ -108,7 +114,6 @@ $white: #ffffff;
   @include flex-4-row;
   @include center;
 }
-//className="flex w-64 h-64 border border-gray-700 m-1 items-center justify-center
 .task-5 {
   @include flex-3-row;
   @include center;
@@ -159,7 +164,6 @@ $white: #ffffff;
   background-color: black;
   @include center;
 }
-// "w-64 h-64 border-gray-900 bg-yellow-500 flex flex-col
 .task-9 {
   display: flex;
   flex-direction: column;

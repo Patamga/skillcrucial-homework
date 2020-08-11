@@ -9,15 +9,16 @@ import store, { history } from '../redux'
 
 import Home from '../components/home'
 import DummyView from '../components/dummy-view'
-import Dummy1 from '../components/1'
-import Dummy2 from '../components/2'
-import Dummy3 from '../components/3'
-import Dummy4 from '../components/4'
-import Dummy5 from '../components/5'
-import Dummy6 from '../components/6'
-import Dummy7 from '../components/7'
-import Dummy8 from '../components/8'
-import Dummy9 from '../components/9'
+import Dummy1 from '../components/microtasks/1'
+import Dummy2 from '../components/microtasks/2'
+import Dummy3 from '../components/microtasks/3'
+import Dummy4 from '../components/microtasks/4'
+import Dummy5 from '../components/microtasks/5'
+import Dummy6 from '../components/microtasks/6'
+import Dummy7 from '../components/microtasks/7'
+import Dummy8 from '../components/microtasks/8'
+import Dummy9 from '../components/microtasks/9'
+import Microtask2 from '../components/microtask2/component'
 import NotFound from '../components/404'
 
 import Startup from './startup'
@@ -91,6 +92,7 @@ const RootComponent = (props) => {
             <Route exact path="/7" component={() => <Dummy7 />} />
             <Route exact path="/8" component={() => <Dummy8 />} />
             <Route exact path="/9" component={() => <Dummy9 />} />
+            <Route exact path="/microtask2" component={() => <Microtask2 />} />
             <Route exact path="/dashboard" component={() => <Home />} />
             <PrivateRoute exact path="/hidden-route" component={() => <DummyView />} />
             <Route component={() => <NotFound />} />

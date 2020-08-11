@@ -14,18 +14,34 @@ const Dummy = () => {
     8: 'Черный квадрат 100 на 100 в центре экрана',
     9: 'Квадрат в центре экрана с тремя невидимыми строками. В каждой строке по квадрату. В первой слева. Во второй по центру. В третьей справа'
   }
-  console.log(tasks)
   return (
     <div className=" mt-5 ml-8  ">
-      {Object.entries(tasks).map((task) => {
-        console.log(task)
-        return (
-          <div key={task.id} className=" mt-5 ml-8  mr-2 flex ">
-            {task[0]})
-            <Link className="pl-2 text-blue-700" to={`/${task[0]}`}>{task[1]}</Link>
-          </div>
-        )
-      })}
+      microtasks
+      <div>
+        {Object.entries(tasks).map((task) => {
+          return (
+            <div key={task.id} className=" mt-5 ml-8  mr-2 flex ">
+              {task[0]})
+              <Link className="pl-2 text-blue-700" to={`/${task[0]}`}>
+                {task[1]}
+              </Link>
+            </div>
+          )
+        })}
+      </div>
+      microtask 2
+      <div>
+        <Link className="link" to="/microtask2">
+          смотреть
+        </Link>
+        <p>
+          из реакта надо использовать useState, https://github.com/JedWatson/classnames Сделать две
+          колонки по центру страницы - в каждой колонке есть заголовок - высотой 16rem. Users
+          Companies Задача , сделать так, чтобы для экрана xl показывались оба столбца, для экрана
+          меньше только один. Но по клику на заголовке, экран переключился в противоположный Users -
+          Companies Companies - Users
+        </p>
+      </div>
     </div>
   )
 }
