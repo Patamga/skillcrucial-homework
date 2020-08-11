@@ -4,7 +4,7 @@ import React, { useState, useEffect} from 'react'
 const Home = () => {
   const [valueHeader, setValueHeader] = useState('')
   const classVisibleOrHidden = {
-    visibility: 'h-screen w-64 flex-col ',
+    visibility: 'h-screen w-64 flex flex-col ',
     hidden: 'hidden sm:hidden md:hidden lg:hidden xl:flex flex-col h-screen w-64 '
   }
   const [col1, setCol1] = useState(classVisibleOrHidden.hdden)
