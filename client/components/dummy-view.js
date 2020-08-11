@@ -32,8 +32,13 @@ const Dummy = () => {
       microtask 2
       <div>
         <Link className="link" to="/microtask2">
-          смотреть
+          смотреть (неправильное решение через чекбокс)
         </Link>
+        <spah>{" "}</spah>
+        <Link className="link" to="/microtask22 ">
+          смотреть (правильное)
+        </Link>
+
         <p>
           из реакта надо использовать useState, https://github.com/JedWatson/classnames Сделать две
           колонки по центру страницы - в каждой колонке есть заголовок - высотой 16rem. Users
