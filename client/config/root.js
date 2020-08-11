@@ -18,7 +18,7 @@ import Dummy6 from '../components/microtasks/6'
 import Dummy7 from '../components/microtasks/7'
 import Dummy8 from '../components/microtasks/8'
 import Dummy9 from '../components/microtasks/9'
-import Microtask2 from '../components/microtask2/component'
+
 import Microtask22 from '../components/microtask2/component-2'
 import NotFound from '../components/404'
 
@@ -93,7 +93,7 @@ const RootComponent = (props) => {
             <Route exact path="/7" component={() => <Dummy7 />} />
             <Route exact path="/8" component={() => <Dummy8 />} />
             <Route exact path="/9" component={() => <Dummy9 />} />
-            <Route exact path="/microtask2" component={() => <Microtask2 />} />
+            
             <Route exact path="/microtask22" component={() => <Microtask22 />} />
             <Route exact path="/dashboard" component={() => <Home />} />
             <PrivateRoute exact path="/hidden-route" component={() => <DummyView />} />

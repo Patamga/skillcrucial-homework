@@ -31,12 +31,9 @@ const Dummy = () => {
       </div>
       microtask 2
       <div>
-        <Link className="link" to="/microtask2">
-          смотреть (неправильное решение через чекбокс)
-        </Link>
-        <spah>{" "}</spah>
+
         <Link className="link" to="/microtask22 ">
-          смотреть (правильное)
+          смотреть решение
         </Link>
 
         <p>
